@@ -1,0 +1,4 @@
+# Put here the filenames to be ignored
+# Compatible with regex to ignore multiple files (ex. .zip files)
+
+maquette/dist

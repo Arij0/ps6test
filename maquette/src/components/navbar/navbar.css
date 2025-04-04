@@ -1,0 +1,105 @@
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 30px;
+    background-color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+}
+
+.game-logo {
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px;
+}
+
+.site-name {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--black);
+}
+
+.navbar-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.navbar-container div {
+    display: flex;
+    gap: 20px;
+}
+
+.navbar-container div a {
+    text-decoration: none;
+    color: #333;
+    font-size: 1.4rem;
+    font-weight: 500;
+
+}
+
+/* Effet hover pour changer la couleur en orange */
+.navbar-container div a:hover {
+    color: var(--orange);
+}
+
+/* Icône utilisateur cliquable */
+.user-icon {
+    font-size: 1.4rem;
+    color: #333;
+    text-decoration: none;
+    transition: color 0.3s;
+    cursor: pointer;
+}
+
+.user-icon:hover {
+    color: var(--orange);
+}
+
+/* Style pour cacher le menu burger sur grand écran */
+#menu-btn {
+    font-size: 1.8rem;
+    cursor: pointer;
+    display: none;
+}
+
+
+.login-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    background: linear-gradient(45deg, #ff7f00, #ff5500);
+    color: white;
+    padding: 6px 12px; /* Moins de padding pour réduire la taille */
+    border-radius: 20px; /* Bordures plus petites */
+    font-size: 1.2rem; /* Texte plus petit */
+    font-weight: bold;
+    text-decoration: none;
+    transition: all 0.3s ease-in-out;
+    box-shadow: 0px 3px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Icône utilisateur plus petite */
+.login-btn i {
+    font-size: 1.2rem;
+}
+
+/* Effet hover */
+.login-btn:hover {
+    background: linear-gradient(45deg, #ff5500, #cc3300);
+    transform: scale(1.05);
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.15);
+}

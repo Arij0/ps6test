@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Admin</title>
+    <link rel="stylesheet" href="Stats.css">
+    <link rel="stylesheet" href="./style.css">
+    
+</head>
+<body>
+    <header><matrio path="/components/navbar/navbar"></matrio></header>
+    <div class="sidebar">
+        <div class="logo">
+            <img src="/assets/logo.jpeg" alt="Logo">
+        </div>
+        <button>Gestion Enfants</button>
+        <button>Gestion Quiz</button>
+        <button>Dashboard</button>
+    </div>
+
+    <div class="main-content">
+        <div class="header">
+            <div class="profile">
+                <img src="/assets/adminPicture.png" alt="Profile Image">
+                <span>John Doe</span>
+            </div>
+            <div class="search-bar">
+                <input type="text" placeholder="Rechercher un enfant...">
+                <button>Rechercher</button>
+            </div>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <h2>75%</h2>
+                <p>Enfants</p>
+            </div>
+            <div class="stat-card">
+                <h2>60%</h2>
+                <p>Quizs</p>
+            </div>
+            <div class="stat-card">
+                <h2>85%</h2>
+                <p>Réussite</p>
+            </div>
+            <div class="stat-card">
+                <h2>15%</h2>
+                <p>Échecs</p>
+            </div>
+        </div>
+        <div class="graph-placeholder">
+            <img src="/assets/dashbord.jpeg" alt="Graphique">
+        </div>
+    </div>
+</body>
+</html>

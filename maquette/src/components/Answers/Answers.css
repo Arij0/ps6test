@@ -1,0 +1,47 @@
+.Answers {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 10px;
+    grid-auto-rows: minmax(100px, auto);
+    place-items: center;
+}
+
+.Answers > *{
+    border-radius: 4px;
+    font-size: 20px;
+    height : 70%;
+    width: 70%;
+    border-style: solid;
+    border-color: #04AA6D;
+    background-color: rgb(16, 224, 16);
+    transition-duration: 0.4s;
+}
+
+.un:hover, .deux:hover, .trois:hover, .quatre:hover {
+    background-color: #04AA6D; /* Green */
+    color: white;
+  }
+
+.un {
+    grid-column: 1;
+    grid-row: 1;
+}
+
+.deux {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+.trois {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.quatre {
+    grid-column: 2;
+    grid-row: 2;
+}
+
+.b {
+    font-size: 10px;
+}

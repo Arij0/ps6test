@@ -1,0 +1,27 @@
+<div class="game-settings-card">
+    <h2>Paramètres du Jeu</h2>
+    
+    <div class="options">
+      <span>Niveau de Difficulté</span>
+      <select [(ngModel)]="difficulty" 
+              name="difficulty"
+              (change)="onDifficultyChange()">
+        <option *ngFor="let option of difficultyOptions" 
+                [value]="option.value">
+          {{ option.label }}
+        </option>
+      </select>
+    </div>
+    
+    <div class="option">
+      <span>Vitesse du Jeu</span>
+      <div class="slider">
+        <input type="range" 
+               [(ngModel)]="speed"
+               [min]="minSpeed"
+               [max]="maxSpeed"
+               (input)="onSpeedChange()">
+        <span>{{ speed }}/{{ maxSpeed }}</span>
+      </div>
+    </div>
+  </div>

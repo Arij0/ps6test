@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer un Quiz</title>
+    <link rel="stylesheet" href="quiz_creation.css">
+    <link rel="stylesheet" href="style.css">
+
+
+</head>
+<body>
+<header><matrio path="/components/navbar/navbar"></matrio></header>
+<div class="quiz-container">
+    <h1>Créer un Quiz</h1>
+
+    <form>
+        <div class="form-group">
+            <label for="quiz-name">Nom du Quiz :</label>
+            <input type="text" id="quiz-name" placeholder="Ex: Mathématiques" required>
+        </div>
+
+        <div class="form-group">
+            <label for="quiz-theme">Thème :</label>
+            <input type="text" id="quiz-theme" placeholder="Ex: Sciences" required>
+        </div>
+
+        <div class="form-group">
+            <label for="quiz-image">Image du Quiz :</label>
+            <input type="file" id="quiz-image" accept="image/*">
+        </div>
+
+       
+        <h2>Questions du Quiz</h2>
+
+        <div class="question-group">
+            <label for="question-1">Question :</label>
+            <input type="text" id="question-1" placeholder="Entrez la question..." required>
+
+            <h2>Réponses :</h2>
+            <p>Cochez la case pour indiquer la bonne réponse</p>
+
+           
+            <div class="reponse">
+                <input type="text" placeholder="Saisissez une réponse">
+                <input type="checkbox" class="toggle">
+                <img src="assets/icons/delete.png" alt="Supprimer">
+            </div>
+
+           
+            <div class="reponse">
+                <input type="text" placeholder="Saisissez une réponse">
+                <input type="checkbox" class="toggle">
+                <img src="assets/icons/delete.png" alt="Supprimer">
+            </div>
+
+           
+            <div class="reponse">
+                <input type="text" placeholder="Saisissez une réponse">
+                <input type="checkbox" class="toggle">
+                <img src="assets/icons/delete.png" alt="Supprimer">
+            </div>
+
+            <button type="button" class="simple-btn"> Ajouter réponse</button>
+        </div>
+
+        <button type="submit" class="btn">Créer le Quiz</button>
+    </form>
+
+    <a href="quiz_page.html" class="back-link"> Retour à la liste des quiz</a>
+</div> 
+
+</body>
+</html>

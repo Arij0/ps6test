@@ -1,0 +1,16 @@
+.choice_button{
+    width: 250px;
+    margin: 5px;
+}
+
+.choice-container{
+    height: fit-content +5;
+    background-color: grey;
+    display: flex;
+    border-radius: 35px;
+}
+
+.choice-container > *{
+    justify-content: center;
+    align-items: center;
+}

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Liste des Quiz</title>
+    <link rel="stylesheet" href="quiz_page.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+<header><matrio path="/components/navbar/navbar"></matrio></header>
+
+<div class="quiz-container">
+    <h1>Liste des Quiz</h1>
+    <div class="quiz-list">
+        <div class="quiz-card">
+            <img src="/assets/lettre.png" alt="Quiz Image">
+            <h3>Dictée</h3>
+            <p>Thème : Écriture</p>
+            <matrio path="components/quiz_questions/quiz_questions"></matrio>
+        </div>
+
+        <div class="quiz-card">
+            <img src="/assets/mathjeu.png" alt="Quiz Image">
+            <h3>Mathématiques</h3>
+            <p>Thème : Algèbre</p>
+            <matrio path="components/quiz_questions/quiz_questions"></matrio>
+        </div>
+
+        <div class="quiz-card">
+            <img src="/assets/sciencejeu.png" alt="Quiz Image">
+            <h3>Science</h3>
+            <p>Thème : Sciences</p>
+            <matrio path="components/quiz_questions/quiz_questions"></matrio>
+        </div>
+    </div>
+
+    <a href="/quiz_creation.html" class="btn">Créer un Quiz</a>
+</div>
+
+</body>
+
+</html>

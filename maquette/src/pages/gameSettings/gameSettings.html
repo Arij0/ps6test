@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>gestion d'utilisateur</title>
+    <link rel="stylesheet" href="./gameSttings.css">
+    <link rel="stylesheet" href="./style.css">
+
+
+
+</head>
+<body>
+<div class="container">
+    <div class="user-card">
+        <div class="profile-picture">
+        <input type="file" id="childImage" name="childImage" accept="image/*">
+        <label for="childImage" class="upload-label">+</label>
+        </div>
+    </div>
+    <div class="form-container">
+        <div class="header">
+            <h2>Ajouter un Enfant</h2>
+            <button class="add-button">+</button>
+        </div>
+        <form action="#" method="POST">
+            <div class="form-group">
+                <label for="name">Nom</label>
+                <input type="text" id="name" name="name" placeholder="Nom de l'enfant" required>
+            </div>
+            <div class="form-group">
+                <label for="surname">Prénom</label>
+                <input type="text" id="surname" name="surname" placeholder="Prénom de l'enfant" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email du Parent</label>
+                <input type="text" id="email" name="email" placeholder="Email du parent" required>
+            </div>
+            <div class="form-group">
+                <label for="adress">Adresse du Parent</label>
+                <input type="text" id="adress" name="adress" placeholder="Adresse " required>
+            </div>
+            <div class="form-group">
+                <label for="number">Numéro de Téléphone du Parent</label>
+                <input type="text" id="number" name="number" placeholder="Numéro de téléphone" required>
+            </div>
+        </form>
+    </div>
+    </div>
+        <div class="game-settings-card">
+            <h2>Paramètres du Jeu</h2>
+            <div class="options">
+                <span>Niveau de Difficulté</span>
+                <select id="difficulty" name="difficulty">
+                    <option value="moderate">Modéré</option>
+                    <option value="severe">Sévère</option>
+                    <option value="light">Léger</option>
+                </select>
+            </div>
+            <div class="option">
+                <span>Affichage des indices</span>
+                <div class="radio-buttons">
+                    <label>
+                        <input type="radio" id="yes" name="hints" value="yes">Oui
+                    </label>
+                    <label>
+                        <input type="radio" id="no" name="hints" value="no">Non
+                    </label>
+                </div>
+            </div>
+        <div class="option">
+            <span>Vitesse du Jeu</span>
+            <div class="slider">
+                <input type="range" id="speed" name="speed" min="1" max="10" >
+                <span id="speedValue">5</span>
+            </div>
+        </div>
+        <div class="option">
+            <span>Mode d'Interaction</span>
+            <select id="interactionMode" name="interactionMode">
+                <option value="click">Clic</option>
+                <option value="audio">Audio</option>
+                <option value="keyboard">Keyboard</option>
+            </select>
+        </div>
+        <div class="option">
+            <span>chronomètre</span>
+            <div class="radio-buttom">
+                <label>
+                    <input type="radio" id="chronoYes" name="chrono" value="yes">Oui
+                </label>
+                <label>
+                    <input type="radio" id="chronoNo" name="chrono" value="no">Non
+                </label>
+            </div>
+        </div>
+        <div class="option">
+            <span>Supprimer les mauvaises réponses</span>
+            <div class="radio-buttons">
+                <label>
+                    <input type="radio" id="removeYes" name="removeWrong" value="yes">Oui
+                </label>
+                <label>
+                    <input type="radio" id="removeNo" name="removeNo" value="no">Non
+                </label>
+            </div>
+        </div>
+            <div class="option">
+                <span>Affichage du score</span>
+                <div class="radio-buttons">
+                    <label>
+                        <input type="radio" id="scoreYes" name="score" value="yes">Oui
+                    </label>
+                    <label>
+                        <input type="radio" id="scoreNo" name="score" value="no">Non
+                    </label>
+                </div>
+            </div>
+            <div class="option">
+                <span>Type de Feedback</span>
+                <select id="feedBack" name="feedbackType">
+                    <option value="simple">Simple</option>
+                    <option value="moderate">Modéré</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script>
+            document.getElementById("speed").addEventListener('input',function () {
+                document.getElementById('speedValue').textContent = this.value;
+            });
+
+    </script>
+</body>
+</html>
