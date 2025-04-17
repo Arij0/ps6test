@@ -1,29 +1,45 @@
 <div class="form-container">
     <div class="header">
-        <h2>Ajouter un Enfant</h2>
-        <button class="add-button">+</button>
+      <h2>Ajouter un Enfant</h2>
+      <button class="add-button">+</button>
     </div>
+  
     <form (ngSubmit)="ajouterEnfant()">
-        <div class="form-group">
-            <label for="name">Nom</label>
-            <input type="text" [(ngModel)]="nom" name="name" placeholder="Nom de l'enfant" required>
+      
+      <div class="form-group">
+        <label for="photo">Photo de l'enfant</label>
+        <input type="file" id="photo" (change)="onPhotoSelected($event)" accept="image/*" />
+        <div *ngIf="photoPreview" class="photo-preview">
+          <img [src]="photoPreview" alt="Aperçu de la photo" />
         </div>
-        <div class="form-group">
-            <label for="surname">Prénom</label>
-            <input type="text" [(ngModel)]="prenom" name="surname" placeholder="Prénom de l'enfant" required>
-        </div>
-        <div class="form-group">
-            <label for="email">Email du Parent</label>
-            <input type="email" [(ngModel)]="email" name="email" placeholder="Email du parent" required>
-        </div>
-        <div class="form-group">
-            <label for="adresse">Adresse du Parent</label>
-            <input type="text" [(ngModel)]="adresse" name="adresse" placeholder="Adresse complète">
-        </div>
-        <div class="form-group">
-            <label for="telephone">Numéro de téléphone</label>
-            <input type="tel" [(ngModel)]="numeroTelephone" name="telephone" placeholder="Numéro de téléphone" required>
-        </div>
-        <button type="submit" class="submit-button">Ajouter</button>    
+      </div>
+  
+      <div class="form-group">
+        <label for="name">Nom</label>
+        <input type="text" [(ngModel)]="nom" name="name" placeholder="Nom de l'enfant" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="surname">Prénom</label>
+        <input type="text" [(ngModel)]="prenom" name="surname" placeholder="Prénom de l'enfant" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="email">Email du Parent</label>
+        <input type="email" [(ngModel)]="email" name="email" placeholder="Email du parent" required />
+      </div>
+  
+      <div class="form-group">
+        <label for="adresse">Adresse du Parent</label>
+        <input type="text" [(ngModel)]="adresse" name="adresse" placeholder="Adresse complète" />
+      </div>
+  
+      <div class="form-group">
+        <label for="telephone">Numéro de téléphone</label>
+        <input type="tel" [(ngModel)]="numeroTelephone" name="telephone" placeholder="Numéro de téléphone" required />
+      </div>
+  
+      <button type="submit" class="submit-button">Ajouter</button>
     </form>
-</div>
+  </div>
+  
