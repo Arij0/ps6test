@@ -1,5 +1,26 @@
-import { Component, Input, OnInit } from '@angular/core';
+// game-settings.component.ts
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+// Interface pour définir la structure des paramètres du jeu
+export interface GameSettings {
+  difficulty: string;
+  wordLength: string;
+  confusableLetters: boolean;
+  phoneticComplexity: string;
+  hintType: string[];
+  hintsCount: number;
+  hintDelay: number;
+  gameSpeed: number;
+  interactionMode: string;
+  timerEnabled: boolean;
+  timerDuration: number;
+  hideIncorrectAnswers: boolean;
+  showFinalScore: boolean;
+  feedbackLevel: string;
+  showRemainingTime: boolean;
+  motivationalMessage: string;
+}
 
 @Component({
   selector: 'app-game-settings',
@@ -7,82 +28,141 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./game-settings.component.scss']
 })
 export class GameSettingsComponent implements OnInit {
-  @Input() childId: string = '';
+  @Output() settingsChanged = new EventEmitter<GameSettings>();
+  
   settingsForm: FormGroup;
-
-  difficulty: string = 'medium';
-  speed: number = 5;
-  maxSpeed: number = 10;
+  
+  // Options pour les différents sélecteurs
   difficultyOptions = [
-    { value: 'easy', label: 'Easy' },
-    { value: 'medium', label: 'Medium' },
-    { value: 'hard', label: 'Hard' }
+    { value: 'easy', label: 'Facile' },
+    { value: 'medium', label: 'Moyen' },
+    { value: 'hard', label: 'Difficile' }
   ];
-
+  
+  wordLengthOptions = [
+    { value: 'short', label: 'Courts (3-4 lettres)' },
+    { value: 'medium', label: 'Moyens (5-7 lettres)' },
+    { value: 'long', label: 'Longs (8+ lettres)' }
+  ];
+  
+  phoneticComplexityOptions = [
+    { value: 'simple', label: 'Simple' },
+    { value: 'intermediate', label: 'Intermédiaire' },
+    { value: 'complex', label: 'Complexe' }
+  ];
+  
+  hintTypeOptions = [
+    { value: 'text', label: 'Texte' },
+    { value: 'animation', label: 'Animation' },
+    { value: 'image', label: 'Image' },
+    { value: 'audio', label: 'Audio' }
+  ];
+  
+  interactionModeOptions = [
+    { value: 'mouse', label: 'Souris' },
+    { value: 'keyboard', label: 'Clavier' },
+    { value: 'voice', label: 'Commande vocale' }
+  ];
+  
+  feedbackLevelOptions = [
+    { value: 'none', label: 'Aucun' },
+    { value: 'basic', label: 'Basique' },
+    { value: 'detailed', label: 'Détaillé' },
+    { value: 'very-detailed', label: 'Très détaillé' }
+  ];
+  
   constructor(private fb: FormBuilder) {
     this.settingsForm = this.fb.group({
-      showHints: ['no', Validators.required],
-      hintsCount: [{ value: 3, disabled: true }],
-      hintsType: [{ value: 'visual', disabled: true }],
-      hintsTiming: [{ value: 'after-time', disabled: true }],
-      hintsAfterTimeDelay: [{ value: 30, disabled: true }],
-      enableChrono: ['no'],
-      chronoDuration: [{ value: 60, disabled: true }],
-      showRemainingTime: ['yes'],
-      motivationalMessage: ['You can do it!']
+      // Difficulté
+      difficulty: ['medium', Validators.required],
+      wordLength: ['medium', Validators.required],
+      confusableLetters: [false],
+      phoneticComplexity: ['simple', Validators.required],
+      
+      // Indices
+      hintType: [['text'], Validators.required],
+      hintsCount: [3, [Validators.required, Validators.min(0), Validators.max(5)]],
+      hintDelay: [5, [Validators.required, Validators.min(0), Validators.max(30)]],
+      
+      // Vitesse et interaction
+      gameSpeed: [5, [Validators.required, Validators.min(1), Validators.max(10)]],
+      interactionMode: ['mouse', Validators.required],
+      
+      // Chronométrage
+      timerEnabled: [true],
+      timerDuration: [60, [Validators.required, Validators.min(10), Validators.max(300)]],
+      showRemainingTime: [true],
+      
+      // Feedback et affichage
+      hideIncorrectAnswers: [false],
+      showFinalScore: [true],
+      feedbackLevel: ['basic', Validators.required],
+      motivationalMessage: ['Tu peux y arriver !']
     });
   }
 
   ngOnInit(): void {
     this.setupFormListeners();
-  }
-
-  onDifficultyChange(): void {
-    console.log('Difficulty changed to:', this.difficulty);
-  }
-
-  onSpeedChange(): void {
-    console.log('Speed changed to:', this.speed);
+    // Émettre les paramètres initiaux
+    this.emitCurrentSettings();
   }
 
   private setupFormListeners(): void {
-    const showHintsControl = this.settingsForm.get('showHints');
-    if (showHintsControl) {
-      showHintsControl.valueChanges.subscribe(value => {
-        const hintsControls = ['hintsCount', 'hintsType', 'hintsTiming', 'hintsAfterTimeDelay'];
-        hintsControls.forEach(control => {
-          const ctrl = this.settingsForm.get(control);
-          if (ctrl) value === 'yes' ? ctrl.enable() : ctrl.disable();
-        });
-      });
-    }
+    // Activer/désactiver le champ timerDuration en fonction de timerEnabled
+    this.settingsForm.get('timerEnabled')?.valueChanges.subscribe(enabled => {
+      const timerDurationControl = this.settingsForm.get('timerDuration');
+      const showRemainingTimeControl = this.settingsForm.get('showRemainingTime');
+      
+      if (timerDurationControl && showRemainingTimeControl) {
+        if (enabled) {
+          timerDurationControl.enable();
+          showRemainingTimeControl.enable();
+        } else {
+          timerDurationControl.disable();
+          showRemainingTimeControl.disable();
+        }
+      }
+    });
+    
+    // Écouter les changements du formulaire et émettre les nouveaux paramètres
+    this.settingsForm.valueChanges.subscribe(() => {
+      this.emitCurrentSettings();
+    });
+  }
 
-    const hintsTimingControl = this.settingsForm.get('hintsTiming');
-    if (hintsTimingControl) {
-      hintsTimingControl.valueChanges.subscribe(() => {
-        this.updateHintsTimeDelayState();
-      });
-    }
-
-    const enableChronoControl = this.settingsForm.get('enableChrono');
-    if (enableChronoControl) {
-      enableChronoControl.valueChanges.subscribe(value => {
-        const chronoDurationControl = this.settingsForm.get('chronoDuration');
-        if (chronoDurationControl) value === 'yes' ? chronoDurationControl.enable() : chronoDurationControl.disable();
-      });
+  emitCurrentSettings(): void {
+    if (this.settingsForm.valid) {
+      this.settingsChanged.emit(this.settingsForm.value as GameSettings);
     }
   }
 
-  updateHintsTimeDelayState(): void {
-    const hintsTiming = this.settingsForm.get('hintsTiming')?.value;
-    const hintsEnabled = this.settingsForm.get('showHints')?.value === 'yes';
-    const hintsAfterTimeDelayControl = this.settingsForm.get('hintsAfterTimeDelay');
-    if (hintsAfterTimeDelayControl) {
-      if (hintsEnabled && hintsTiming === 'after-time') {
-        hintsAfterTimeDelayControl.enable();
-      } else {
-        hintsAfterTimeDelayControl.disable();
-      }
+  saveSettings(): void {
+    if (this.settingsForm.valid) {
+      // Enregistrer les paramètres (localStorage, service, etc.)
+      console.log('Paramètres enregistrés:', this.settingsForm.value);
+      this.emitCurrentSettings();
+      // Vous pourriez ajouter une notification de succès ici
     }
+  }
+
+  resetToDefault(): void {
+    this.settingsForm.reset({
+      difficulty: 'medium',
+      wordLength: 'medium',
+      confusableLetters: false,
+      phoneticComplexity: 'simple',
+      hintType: ['text'],
+      hintsCount: 3,
+      hintDelay: 5,
+      gameSpeed: 5,
+      interactionMode: 'mouse',
+      timerEnabled: true,
+      timerDuration: 60,
+      showRemainingTime: true,
+      hideIncorrectAnswers: false,
+      showFinalScore: true,
+      feedbackLevel: 'basic',
+      motivationalMessage: 'Tu peux y arriver !'
+    });
   }
 }
