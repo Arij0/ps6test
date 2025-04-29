@@ -1,0 +1,77 @@
+<!-- src/app/game-page/game-page.component.html -->
+<div class="game-container"
+     [ngStyle]="{
+       'background-color': themeStyle.backgroundColor,
+       'background-image': themeStyle.backgroundImage,
+       'background-size': 'cover',
+       'color': themeStyle.textColor,
+       'min-height': '100vh'
+     }">
+
+  <div class="top-bar">
+    <div class="timer-container">
+      <div class="timer-label">Temps</div>
+      <div class="timer-bar">
+        <div class="timer-progress" [ngStyle]="{ 'width.%': timerProgress }"></div>
+
+      </div>
+    </div>
+    <button class="settings-button" 
+        [ngStyle]="{ 'color': themeStyle.textColor }" 
+        (click)="openSettings()">⚙️ Paramètres</button>
+
+  </div>
+
+  <div class="content-area">
+    <div class="question-card">
+      <h1 class="question-text" [ngStyle]="{ 'color': themeStyle.textColor }">
+        {{ currentQuestion.text }}
+      </h1>
+    </div>
+
+    
+
+    <div class="options-container">
+      <button 
+        *ngFor="let option of currentQuestion.options" 
+        (click)="checkAnswer(option)"
+        class="option-button"
+        [ngStyle]="{
+          'background-color': themeStyle.buttonColor,
+          'color': '#fff'
+        }">
+        {{ option }}
+      </button>
+    </div>
+  </div>
+
+  
+
+
+
+  <div class="bottom-bar">
+    <button (click)="showHint()"
+            class="hint-button"
+            [ngStyle]="{
+              'background-color': themeStyle.buttonColor,
+               'color': '#fff'
+        }"
+        [disabled]="hintsUsed >= hintsToshow || !currentQuestion.hints || currentHintIndex >= currentQuestion.hints.length">
+   <span class="hint-icon">💡</span>
+   <span class="hint-text">{{ (hintsUsed < hintsToshow && currentQuestion.hints && currentHintIndex < currentQuestion.hints.length) ? 'Indice' : 'Plus d\'indices' }}</span>
+    </button>
+
+    <div *ngIf="hintVisible" class="hint-bubble" [ngStyle]="{ 'color': themeStyle.textColor }">
+      <div class="hint-bubble-arrow"></div>
+      <div class="hint-content">{{ currentHint }}</div>
+    </div>
+  </div>
+
+  <div *ngIf="feedbackMessage" class="feedback-message-container">
+    <div class="feedback-bubble" [ngClass]="'feedback-bubble-' + themeId" [ngClass]="{'feedback-exit': feedbackExiting}">
+      <div class="feedback-message" [ngStyle]="{ 'color': themeStyle.textColor }">
+        <span class="feedback-text">{{ feedbackMessage }}</span>
+      </div>
+    </div>
+  </div>
+</div>

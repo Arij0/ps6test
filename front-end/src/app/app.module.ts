@@ -1,29 +1,44 @@
-import { FormsModule } from '@angular/forms';
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
-
-// Correct import paths (adjust according to your actual file structure)
+import { BrowserModule } from '@angular/platform-browser';
+import { ThemeSelectionComponent } from './theme-selection/theme-selection.component';
+import { ThemeBoxComponent } from './theme-box/theme-box.component';
 import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { GameSettingsComponent } from './components/game-settings/game-settings.component';
-import { UserFormComponent } from './components/user-form/user-form.component';
-import { GameComponent } from './components/app-game/app-game.component'; // Ajout du nouveau composant
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
+import { RouterModule } from '@angular/router';
+import { AppComponent } from './app.component';
+import { GamePageComponent } from './game-page/game-page.component';
+import { QuizEndComponent } from './quiz-end-page/quiz-end-page.component';
+import { GameSettingsComponent } from './game-settings/game-settings.component';
+import { HomePageComponent } from './home-page/home-page.component';
+import { MenuBarComponent } from './menu-bar/menu-bar.component';
+import { AdminLoginComponent } from './admin-login/admin-login.component';
+import { SettingsService } from './services/settings.service';
+import { QuestionService } from './services/question.service';
+import { ScoreService } from './services/score.service';
 @NgModule({
   declarations: [
     AppComponent,
+    ThemeSelectionComponent,
+    ThemeBoxComponent,
+    GamePageComponent,
+    QuizEndComponent,
     GameSettingsComponent,
-    UserFormComponent,
-    GameComponent // Déclarer le nouveau composant
+    HomePageComponent,
+    MenuBarComponent,
+    AdminLoginComponent
+ 
   ],
   imports: [
-    FormsModule,
     BrowserModule,
+    RouterModule,
     AppRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule , // Ajoutez-le à la liste des imports
+    FormsModule
+   
   ],
-  providers: [],
+  providers: [SettingsService, QuestionService, ScoreService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

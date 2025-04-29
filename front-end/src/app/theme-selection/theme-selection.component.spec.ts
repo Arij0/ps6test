@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AppGameComponent } from './app-game.component';
+import { ThemeSelectionComponent } from './theme-selection.component';
 
-describe('AppGameComponent', () => {
-  let component: AppGameComponent;
-  let fixture: ComponentFixture<AppGameComponent>;
+describe('ThemeSelectionComponent', () => {
+  let component: ThemeSelectionComponent;
+  let fixture: ComponentFixture<ThemeSelectionComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppGameComponent]
+      imports: [ThemeSelectionComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(AppGameComponent);
+    fixture = TestBed.createComponent(ThemeSelectionComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
