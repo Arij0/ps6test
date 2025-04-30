@@ -1,0 +1,13 @@
+<div class="quiz-end-container">
+    <div class="quiz-end-content">
+      <h1>Fin du Quiz</h1>
+      <p>Ton score : {{ score }} / {{ totalQuestions }}</p>
+      <p>{{ getMotivationalMessage() }}</p>
+  
+      <div class="button-group">
+        <button (click)="restartQuiz()">Recommencer le quiz</button>
+        <button (click)="goToNextQuiz()">Prochain quiz</button>
+      </div>
+    </div>
+  </div>
+  
