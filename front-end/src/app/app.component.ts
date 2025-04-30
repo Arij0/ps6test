@@ -5,7 +5,13 @@ import { Component } from '@angular/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {  //  <---  EXPORT is essential!
-  constructor(){}
-}
+export class AppComponent {
+  public title: string = 'Hello world!';
+  public showSuccess = false;
 
+  constructor() {}
+
+  showHideSuccess() {
+    this.showSuccess = !this.showSuccess;
+  }
+}
