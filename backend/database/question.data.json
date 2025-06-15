@@ -1,0 +1,1471 @@
+[
+  {
+    "text": "Quel organe pompe le sang dans le corps ?",
+    "options": [
+      "Cœur",
+      "Foie",
+      "Rein",
+      "Poumon"
+    ],
+    "answer": "Cœur",
+    "hints": [
+      "Il bat dans ta poitrine",
+      "Il a la forme d'un symbole d'amour"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752947
+  },
+  {
+    "text": "Combien avons-nous de dents de lait ?",
+    "options": [
+      "Vingt",
+      "Trente",
+      "Quinze",
+      "Douze"
+    ],
+    "answer": "Vingt",
+    "hints": [
+      "C'est un nombre rond",
+      "Elles tombent vers 6 ans"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752948
+  },
+  {
+    "text": "Comment s'appelle l'os de la cuisse ?",
+    "options": [
+      "Fémur",
+      "Tibia",
+      "Humérus",
+      "Radius"
+    ],
+    "answer": "Fémur",
+    "hints": [
+      "C'est l'os le plus long du corps",
+      "Il relie la hanche au genou"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752949
+  },
+  {
+    "text": "Quel organe nous aide à respirer ?",
+    "options": [
+      "Poumons",
+      "Estomac",
+      "Cerveau",
+      "Intestin"
+    ],
+    "answer": "Poumons",
+    "hints": [
+      "Ils sont deux dans la poitrine",
+      "Ils se gonflent quand on inspire"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752950
+  },
+  {
+    "text": "Comment s'appelle le médecin des dents ?",
+    "options": [
+      "Dentiste",
+      "Docteur",
+      "Pharmacien",
+      "Chirurgien"
+    ],
+    "answer": "Dentiste",
+    "hints": [
+      "Il soigne les caries",
+      "Il utilise une petite foreuse"
+    ],
+    "wordLength": 8,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752951
+  },
+  {
+    "text": "Quel spécialiste soigne les problèmes de l'esprit ?",
+    "options": [
+      "Psychiatre",
+      "Dentiste",
+      "Pédiatre",
+      "Cardiologue"
+    ],
+    "answer": "Psychiatre",
+    "hints": [
+      "Il aide quand on est triste ou anxieux",
+      "Son nom commence par 'psy'"
+    ],
+    "wordLength": 10,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752952
+  },
+  {
+    "text": "Avec quoi entend-on les sons ?",
+    "options": [
+      "Oreille",
+      "Nez",
+      "Bouche",
+      "Main"
+    ],
+    "answer": "Oreille",
+    "hints": [
+      "C'est sur les côtés de la tête",
+      "Ça capte les bruits"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752953
+  },
+  {
+    "text": "Où se trouve le cerveau ?",
+    "options": [
+      "Tête",
+      "Ventre",
+      "Bras",
+      "Jambe"
+    ],
+    "answer": "Tête",
+    "hints": [
+      "C'est tout en haut",
+      "C'est protégé par le crâne"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752954
+  },
+  {
+    "text": "Comment s'appelle l'os du bras ?",
+    "options": [
+      "Humérus",
+      "Fémur",
+      "Tibia",
+      "Radius"
+    ],
+    "answer": "Humérus",
+    "hints": [
+      "Il va de l'épaule au coude",
+      "C'est l'os le plus long du bras"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752955
+  },
+  {
+    "text": "Que fait le cœur ?",
+    "options": [
+      "Battre",
+      "Digérer",
+      "Respirer",
+      "Penser"
+    ],
+    "answer": "Battre",
+    "hints": [
+      "On peut le sentir dans la poitrine",
+      "Il fait BOUM BOUM"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752956
+  },
+  {
+    "text": "Quel médecin opère les malades ?",
+    "options": [
+      "Chirurgien",
+      "Dentiste",
+      "Pédiatre",
+      "Pharmacien"
+    ],
+    "answer": "Chirurgien",
+    "hints": [
+      "Il utilise un scalpel",
+      "Il travaille au bloc opératoire"
+    ],
+    "wordLength": 10,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752957
+  },
+  {
+    "text": "Combien avons-nous de bras ?",
+    "options": [
+      "Deux",
+      "Trois",
+      "Quatre",
+      "Un"
+    ],
+    "answer": "Deux",
+    "hints": [
+      "C'est un nombre pair",
+      "Un de chaque côté"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752958
+  },
+  {
+    "text": "Avec quoi sent-on les odeurs ?",
+    "options": [
+      "Nez",
+      "Yeux",
+      "Bouche",
+      "Oreilles"
+    ],
+    "answer": "Nez",
+    "hints": [
+      "C'est au milieu du visage",
+      "Il a deux trous"
+    ],
+    "wordLength": 3,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752959
+  },
+  {
+    "text": "Où digère-t-on la nourriture ?",
+    "options": [
+      "Estomac",
+      "Poumons",
+      "Cerveau",
+      "Muscles"
+    ],
+    "answer": "Estomac",
+    "hints": [
+      "C'est dans le ventre",
+      "Il fait des gargouillements"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Corps humain",
+    "quizId": 1748842752946,
+    "id": 1748842752960
+  },
+  {
+    "text": "Que mange le Petit Chaperon Rouge ?",
+    "options": [
+      "Loup",
+      "Pain",
+      "Pomme",
+      "Soupe"
+    ],
+    "answer": "Loup",
+    "hints": [
+      "C'est un animal sauvage",
+      "Il a de grandes dents"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800864
+  },
+  {
+    "text": "Avec quoi Cendrillon va-t-elle au bal ?",
+    "options": [
+      "Citrouille",
+      "Carrosse",
+      "Cheval",
+      "Train"
+    ],
+    "answer": "Citrouille",
+    "hints": [
+      "C'est un légume orange",
+      "La fée l'a transformée"
+    ],
+    "wordLength": 10,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800865
+  },
+  {
+    "text": "Qu'est-ce qui grandit quand Pinocchio ment ?",
+    "options": [
+      "Nez",
+      "Oreilles",
+      "Pieds",
+      "Main"
+    ],
+    "answer": "Nez",
+    "hints": [
+      "C'est au milieu du visage",
+      "On sent les odeurs avec"
+    ],
+    "wordLength": 3,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800866
+  },
+  {
+    "text": "Combien y a-t-il de nains chez Blanche-Neige ?",
+    "options": [
+      "Sept",
+      "Cinq",
+      "Six",
+      "Huit"
+    ],
+    "answer": "Sept",
+    "hints": [
+      "C'est un nombre chanceux",
+      "Ils travaillent dans une mine"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800867
+  },
+  {
+    "text": "Que perd Cendrillon au bal ?",
+    "options": [
+      "Chaussure",
+      "Collier",
+      "Bracelet",
+      "Couronne"
+    ],
+    "answer": "Chaussure",
+    "hints": [
+      "On la met aux pieds",
+      "Elle était en verre"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800868
+  },
+  {
+    "text": "Qui réveille la Belle au Bois Dormant ?",
+    "options": [
+      "Prince",
+      "Fée",
+      "Sorcière",
+      "Dragon"
+    ],
+    "answer": "Prince",
+    "hints": [
+      "C'est un homme royal",
+      "Il donne un baiser"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800869
+  },
+  {
+    "text": "Qui mange les trois petits cochons ?",
+    "options": [
+      "Loup",
+      "Ours",
+      "Renard",
+      "Lion"
+    ],
+    "answer": "Loup",
+    "hints": [
+      "Il souffle sur les maisons",
+      "Il a de grandes dents"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800870
+  },
+  {
+    "text": "Que mange Boucle d'Or chez les ours ?",
+    "options": [
+      "Porridge",
+      "Soupe",
+      "Pain",
+      "Miel"
+    ],
+    "answer": "Porridge",
+    "hints": [
+      "C'est chaud dans un bol",
+      "C'est fait avec des céréales"
+    ],
+    "wordLength": 8,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800871
+  },
+  {
+    "text": "Qui dort dans la tour ?",
+    "options": [
+      "Raiponce",
+      "Cendrillon",
+      "Sirène",
+      "Fée"
+    ],
+    "answer": "Raiponce",
+    "hints": [
+      "Elle a de très longs cheveux",
+      "Elle vit en haut d'une tour"
+    ],
+    "wordLength": 8,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800872
+  },
+  {
+    "text": "Que collectionne la Petite Sirène ?",
+    "options": [
+      "Objets",
+      "Coquillages",
+      "Perles",
+      "Algues"
+    ],
+    "answer": "Objets",
+    "hints": [
+      "Elle les garde dans sa grotte",
+      "Ce sont des choses humaines"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800873
+  },
+  {
+    "text": "Qui vole le feu aux dieux ?",
+    "options": [
+      "Prométhée",
+      "Hercule",
+      "Zeus",
+      "Apollon"
+    ],
+    "answer": "Prométhée",
+    "hints": [
+      "Il l'a donné aux humains",
+      "C'est un titan généreux"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800874
+  },
+  {
+    "text": "Où habite le Père Noël ?",
+    "options": [
+      "Pôle",
+      "Forêt",
+      "Château",
+      "Grotte"
+    ],
+    "answer": "Pôle",
+    "hints": [
+      "Il fait très froid",
+      "C'est tout en haut de la Terre"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800875
+  },
+  {
+    "text": "Que mange le Petit Poucet ?",
+    "options": [
+      "Miettes",
+      "Pommes",
+      "Noix",
+      "Baies"
+    ],
+    "answer": "Miettes",
+    "hints": [
+      "Il les sème sur le chemin",
+      "C'est des morceaux de pain"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800876
+  },
+  {
+    "text": "Qui aide Cendrillon ?",
+    "options": [
+      "Fée",
+      "Sorcière",
+      "Reine",
+      "Mère"
+    ],
+    "answer": "Fée",
+    "hints": [
+      "Elle a une baguette magique",
+      "Elle est marraine"
+    ],
+    "wordLength": 3,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800877
+  },
+  {
+    "text": "Combien de têtes a l'Hydre ?",
+    "options": [
+      "Plusieurs",
+      "Une",
+      "Deux",
+      "Trois"
+    ],
+    "answer": "Plusieurs",
+    "hints": [
+      "Elles repoussent quand on les coupe",
+      "C'est plus que beaucoup"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Contes et légendes",
+    "quizId": 1748854800863,
+    "id": 1748854800878
+  },
+  {
+    "text": "Quelle couleur fait le mélange rouge et jaune ?",
+    "options": [
+      "Orange",
+      "Violet",
+      "Vert",
+      "Rose"
+    ],
+    "answer": "Orange",
+    "hints": [
+      "C'est la couleur d'un fruit",
+      "C'est entre le rouge et le jaune"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799355
+  },
+  {
+    "text": "De quelle couleur est le soleil ?",
+    "options": [
+      "Jaune",
+      "Rouge",
+      "Blanc",
+      "Or"
+    ],
+    "answer": "Jaune",
+    "hints": [
+      "C'est la couleur des bananes",
+      "C'est lumineux et joyeux"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799356
+  },
+  {
+    "text": "Quelle couleur obtient-on avec bleu et jaune ?",
+    "options": [
+      "Vert",
+      "Violet",
+      "Gris",
+      "Marron"
+    ],
+    "answer": "Vert",
+    "hints": [
+      "C'est la couleur de l'herbe",
+      "C'est la couleur de la nature"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799357
+  },
+  {
+    "text": "De quelle couleur est un flamant rose ?",
+    "options": [
+      "Rose",
+      "Rouge",
+      "Blanc",
+      "Violet"
+    ],
+    "answer": "Rose",
+    "hints": [
+      "C'est dans son nom",
+      "C'est une couleur douce"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799358
+  },
+  {
+    "text": "Quelle couleur fait le mélange de toutes les couleurs ?",
+    "options": [
+      "Noir",
+      "Blanc",
+      "Gris",
+      "Marron"
+    ],
+    "answer": "Noir",
+    "hints": [
+      "C'est l'absence de lumière",
+      "C'est le contraire du blanc"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799359
+  },
+  {
+    "text": "Comment s'appelle la couleur entre le rouge et le bleu ?",
+    "options": [
+      "Violet",
+      "Orange",
+      "Vert",
+      "Jaune"
+    ],
+    "answer": "Violet",
+    "hints": [
+      "C'est la couleur des lavandes",
+      "C'est aussi le nom d'une fleur"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799360
+  },
+  {
+    "text": "De quelle couleur est le ciel ?",
+    "options": [
+      "Bleu",
+      "Vert",
+      "Rouge",
+      "Jaune"
+    ],
+    "answer": "Bleu",
+    "hints": [
+      "C'est la couleur de l'océan aussi",
+      "C'est frais et calme"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799367
+  },
+  {
+    "text": "Quelle couleur font rouge et blanc ?",
+    "options": [
+      "Rose",
+      "Violet",
+      "Orange",
+      "Gris"
+    ],
+    "answer": "Rose",
+    "hints": [
+      "C'est doux et féminin",
+      "C'est la couleur des cochons"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799368
+  },
+  {
+    "text": "De quelle couleur sont les feuilles en automne ?",
+    "options": [
+      "Marron",
+      "Vert",
+      "Bleu",
+      "Blanc"
+    ],
+    "answer": "Marron",
+    "hints": [
+      "C'est la couleur du chocolat",
+      "Elles tombent des arbres"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799369
+  },
+  {
+    "text": "Quelle couleur obtient-on avec noir et blanc ?",
+    "options": [
+      "Gris",
+      "Vert",
+      "Violet",
+      "Rouge"
+    ],
+    "answer": "Gris",
+    "hints": [
+      "C'est entre le noir et le blanc",
+      "C'est la couleur des nuages"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799370
+  },
+  {
+    "text": "De quelle couleur est la neige ?",
+    "options": [
+      "Blanc",
+      "Gris",
+      "Bleu",
+      "Jaune"
+    ],
+    "answer": "Blanc",
+    "hints": [
+      "C'est très pur",
+      "C'est l'absence de couleur"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799371
+  },
+  {
+    "text": "Quelle couleur fait bleu et rouge ?",
+    "options": [
+      "Violet",
+      "Vert",
+      "Orange",
+      "Rose"
+    ],
+    "answer": "Violet",
+    "hints": [
+      "C'est mystérieux",
+      "C'est la couleur des prunes"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799372
+  },
+  {
+    "text": "De quelle couleur sont les émeraudes ?",
+    "options": [
+      "Vert",
+      "Bleu",
+      "Rouge",
+      "Jaune"
+    ],
+    "answer": "Vert",
+    "hints": [
+      "C'est la couleur de la nature",
+      "C'est apaisant pour les yeux"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799373
+  },
+  {
+    "text": "Quelle couleur porte-bonheur en Asie ?",
+    "options": [
+      "Rouge",
+      "Blanc",
+      "Noir",
+      "Bleu"
+    ],
+    "answer": "Rouge",
+    "hints": [
+      "C'est vif et énergique",
+      "C'est la couleur du feu"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799374
+  },
+  {
+    "text": "De quelle couleur sont les tournesols ?",
+    "options": [
+      "Jaune",
+      "Rouge",
+      "Blanc",
+      "Violet"
+    ],
+    "answer": "Jaune",
+    "hints": [
+      "Comme le soleil qu'ils suivent",
+      "C'est éclatant et joyeux"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Couleurs",
+    "quizId": 1748842799354,
+    "id": 1748842799375
+  },
+  {
+    "text": "Combien y a-t-il de notes de musique ?",
+    "options": [
+      "Sept",
+      "Huit",
+      "Six",
+      "Cinq"
+    ],
+    "answer": "Sept",
+    "hints": [
+      "Do, Ré, Mi, Fa, Sol, La, Si",
+      "C'est un nombre chanceux"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799361
+  },
+  {
+    "text": "Quel instrument a des touches noires et blanches ?",
+    "options": [
+      "Piano",
+      "Guitare",
+      "Flûte",
+      "Tambour"
+    ],
+    "answer": "Piano",
+    "hints": [
+      "On joue avec les doigts",
+      "C'est un grand instrument"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799362
+  },
+  {
+    "text": "Comment s'appelle la première note de musique ?",
+    "options": [
+      "Do",
+      "Ré",
+      "Mi",
+      "Fa"
+    ],
+    "answer": "Do",
+    "hints": [
+      "C'est très court",
+      "Ça commence la gamme"
+    ],
+    "wordLength": 2,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799363
+  },
+  {
+    "text": "Quel instrument fait du bruit quand on le frappe ?",
+    "options": [
+      "Tambour",
+      "Violon",
+      "Piano",
+      "Flûte"
+    ],
+    "answer": "Tambour",
+    "hints": [
+      "On utilise des baguettes",
+      "Il fait BOUM BOUM"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799364
+  },
+  {
+    "text": "Dans quel instrument souffle-t-on ?",
+    "options": [
+      "Flûte",
+      "Guitare",
+      "Piano",
+      "Violon"
+    ],
+    "answer": "Flûte",
+    "hints": [
+      "C'est long et fin",
+      "On met la bouche dessus"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799365
+  },
+  {
+    "text": "Quel instrument en bois a des lames qu'on frappe ?",
+    "options": [
+      "Xylophone",
+      "Guitare",
+      "Violon",
+      "Piano"
+    ],
+    "answer": "Xylophone",
+    "hints": [
+      "Son nom commence par X",
+      "Il a des couleurs différentes"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799366
+  },
+  {
+    "text": "Quel instrument a des cordes ?",
+    "options": [
+      "Guitare",
+      "Flûte",
+      "Tambour",
+      "Piano"
+    ],
+    "answer": "Guitare",
+    "hints": [
+      "On gratte les cordes",
+      "Les musiciens en portent en bandoulière"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799367
+  },
+  {
+    "text": "Que dirige un chef d'orchestre ?",
+    "options": [
+      "Musiciens",
+      "Chanteurs",
+      "Danseurs",
+      "Acteurs"
+    ],
+    "answer": "Musiciens",
+    "hints": [
+      "Ils jouent tous ensemble",
+      "Ils ont des instruments"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799368
+  },
+  {
+    "text": "Quel instrument ressemble à une petite guitare ?",
+    "options": [
+      "Ukulélé",
+      "Violon",
+      "Harpe",
+      "Banjo"
+    ],
+    "answer": "Ukulélé",
+    "hints": [
+      "Il vient d'Hawaï",
+      "Il a quatre cordes"
+    ],
+    "wordLength": 7,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 3,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799369
+  },
+  {
+    "text": "Comment appelle-t-on un groupe de musiciens ?",
+    "options": [
+      "Orchestre",
+      "Équipe",
+      "Troupe",
+      "Bande"
+    ],
+    "answer": "Orchestre",
+    "hints": [
+      "Ils jouent ensemble sur scène",
+      "Le chef les dirige avec une baguette"
+    ],
+    "wordLength": 9,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799370
+  },
+  {
+    "text": "Quel instrument fait 'ding dong' ?",
+    "options": [
+      "Cloche",
+      "Guitare",
+      "Flûte",
+      "Violon"
+    ],
+    "answer": "Cloche",
+    "hints": [
+      "Elle sonne dans les églises",
+      "On la balance pour qu'elle sonne"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799371
+  },
+  {
+    "text": "Avec quoi joue-t-on du violon ?",
+    "options": [
+      "Archet",
+      "Baguettes",
+      "Doigts",
+      "Médiator"
+    ],
+    "answer": "Archet",
+    "hints": [
+      "C'est long avec des crins",
+      "On le passe sur les cordes"
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799372
+  },
+  {
+    "text": "Quelle note vient après 'Do' ?",
+    "options": [
+      "Ré",
+      "Mi",
+      "Fa",
+      "Sol"
+    ],
+    "answer": "Ré",
+    "hints": [
+      "C'est la deuxième note",
+      "Elle rime avec 'thé'"
+    ],
+    "wordLength": 2,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799373
+  },
+  {
+    "text": "Quel grand instrument a des pédales ?",
+    "options": [
+      "Orgue",
+      "Piano",
+      "Harpe",
+      "Violon"
+    ],
+    "answer": "Orgue",
+    "hints": [
+      "Il est souvent dans les églises",
+      "Il a plein de tuyaux"
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799374
+  },
+  {
+    "text": "Comment s'appelle la personne qui chante ?",
+    "options": [
+      "Chanteur",
+      "Musicien",
+      "Artiste",
+      "Compositeur"
+    ],
+    "answer": "Chanteur",
+    "hints": [
+      "Il utilise sa voix",
+      "Il peut tenir un micro"
+    ],
+    "wordLength": 8,
+    "hasSimilarLetters": true,
+    "phoneticComplexity": 2,
+    "isCustom": true,
+    "category": "Musique",
+    "quizId": 1748842799353,
+    "id": 1748842799375
+  },
+  {
+    "text": "Quelle couleur est celle du feu qui brûle, d'une tomate bien mûre, ou d'une fraisie juteuse ?",
+    "options": [
+      "Bleu",
+      "Jaune",
+      "Rouge",
+      "Rose"
+    ],
+    "answer": "Rouge",
+    "hints": [
+      "Imagine une pomme rouge.",
+      " Pense à un cœur d'amour.",
+      "C'est la couleur de la lave d'un volcan.",
+      " Un bonnet de Père Noël.",
+      " Un bonnet de Père Noël."
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749950093619,
+    "id": 1749950093637
+  },
+  {
+    "text": "Quelle couleur est celle du ciel quand il fait beau, de la mer profonde, ou d'un jean que tu portes ?",
+    "options": [
+      "Rose",
+      "Bleu",
+      "Orange",
+      "Violet"
+    ],
+    "answer": "Bleu",
+    "hints": [
+      "Imagine un grand océan.",
+      "C'est la couleur de certaines voitures de police.",
+      "Pense à un lac tranquille.",
+      "La baleine est souvent dessinée de cette couleur.",
+      "C'est la couleur de l'eau claire."
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749950093619,
+    "id": 1749950093638
+  },
+  {
+    "text": "Quelle couleur est celle du soleil brillant, d'un citron un peu acide, ou d'un poussin tout doux ?",
+    "options": [
+      "Rouge",
+      "Noir",
+      "Vert",
+      "Jaune"
+    ],
+    "answer": "Jaune",
+    "hints": [
+      "Imagine un taxi.",
+      "C'est la couleur d'une banane.",
+      "Pense aux petites fleurs de pissenlit.",
+      "C'est la couleur de la lumière.",
+      "Le beurre est souvent de cette couleur."
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749950093619,
+    "id": 1749950093639
+  },
+  {
+    "text": "Quelle couleur est celle de l'herbe des champs, des feuilles des arbres, ou d'une grenouille qui saute ?",
+    "options": [
+      "Marron",
+      "Vert",
+      "Gris",
+      "Blanc"
+    ],
+    "answer": "Vert",
+    "hints": [
+      "Imagine un concombre.",
+      "C'est la couleur d'une forêt.",
+      "Pense à un trèfle à quatre feuilles.",
+      "C'est la couleur d'une pomme Granny Smith.",
+      "La salade est de cette couleur."
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749950093619,
+    "id": 1749950093640
+  },
+  {
+    "text": "Quelle couleur est celle d'une carotte croquante, d'une orange fruitée, ou d'un coucher de soleil ?",
+    "options": [
+      "Rouge",
+      "Vert",
+      "Orange",
+      "Jaune"
+    ],
+    "answer": "Orange",
+    "hints": [
+      "Imagine une citrouille d'Halloween.",
+      "C'est la couleur du jus de fruit que tu bois le matin.",
+      "Pense aux feuilles en automne.",
+      "L'animal Poisson-clown (Némo) est de cette couleur.",
+      "La clémentine est de cette couleur."
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749950093619,
+    "id": 1749950093641
+  },
+  {
+    "text": "Quel chiffre vient juste après le chiffre 1 ?",
+    "options": [
+      "Trois",
+      "Deux",
+      "Quatre",
+      "Un"
+    ],
+    "answer": "Trois",
+    "hints": [
+      "Pense au nombre de roues sur un vélo.",
+      "C'est 1 plus 1",
+      "C'est le nombre d'yeux que tu as.",
+      "On dit 'un, ...",
+      "Le chiffre qui suit 'un'."
+    ],
+    "wordLength": 5,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749951186653,
+    "id": 1749951186670
+  },
+  {
+    "text": "Quel chiffre vient juste après le chiffre 1 ?",
+    "options": [
+      "Trois",
+      "Deux",
+      "Quatre",
+      "Un"
+    ],
+    "answer": "Deux",
+    "hints": [
+      "Pense au nombre de roues sur un vélo.",
+      "C'est le nombre d'yeux que tu as.",
+      "C'est 1 plus 1",
+      "Le chiffre qui suit 'un'.",
+      "On dit 'un, ...'"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749951502843,
+    "id": 1749951502865
+  },
+  {
+    "text": "Avec quelle partie de ton corps peux-tu voir les couleurs de l'arc-en-ciel ?",
+    "options": [
+      "Bouche",
+      "Oreilles",
+      "Yeux",
+      "Nez"
+    ],
+    "answer": "Bouche",
+    "hints": [
+      "Tu en as deux",
+      "Ils te servent à regarder des dessins animés",
+      "Ils sont sur ton visage",
+      "Tu les fermes pour dormir",
+      "C'est là où il y a tes cils."
+    ],
+    "wordLength": 6,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749952296580,
+    "id": 1749952296608
+  },
+  {
+    "text": "Quelles parties de ton corps te permettent de courir et de sauter ?",
+    "options": [
+      "Bras",
+      "Jambes",
+      "Pieds",
+      "Tete"
+    ],
+    "answer": "Bras",
+    "hints": [
+      "Tu en as deux grandes",
+      "Elles sont en bas de ton corps",
+      "Tu mets tes pantalons dessus.",
+      "Elles se plient au niveau des genoux.",
+      "Elles portent tout ton corps"
+    ],
+    "wordLength": 4,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749952296580,
+    "id": 1749952296627
+  },
+  {
+    "text": "Quelle partie de ton corps utilises-tu pour parler, chanter et manger de bonnes choses ?",
+    "options": [
+      "Nez",
+      "Langue",
+      "Bouche",
+      "Dents"
+    ],
+    "answer": "Nez",
+    "hints": [
+      "Elle est au milieu de ton visage.",
+      "C'est là où tu mets la nourriture.",
+      "Tu l'ouvres pour sourire.",
+      "On y trouve la langue et les dents.",
+      "Elle sert à faire des bisous."
+    ],
+    "wordLength": 3,
+    "hasSimilarLetters": false,
+    "phoneticComplexity": 1,
+    "isCustom": true,
+    "quizId": 1749971714669,
+    "id": 1749971714707
+  }
+]

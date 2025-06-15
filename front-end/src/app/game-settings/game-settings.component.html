@@ -1,0 +1,447 @@
+<div class="game-settings-container">
+  <h2>Paramètres du jeu</h2>
+
+  <form [formGroup]="settingsForm" class="settings-form" (ngSubmit)="onSettingsChange()">
+    
+    <!-- Section Sélection du niveau de difficulté -->
+    <div class="settings-section difficulty-selection">
+      <h3>Choisissez votre niveau de difficulté</h3>
+      <div class="difficulty-buttons">
+        <button type="button" 
+                class="difficulty-btn" 
+                [class.active]="selectedDifficultyLevel === 'easy'"
+                (click)="selectDifficultyLevel('easy')">
+          <div class="difficulty-icon">😊</div>
+          <div class="difficulty-label">Facile</div>
+          <div class="difficulty-description">Mots courts (3-5 lettres)<br>Pas de lettres confuses<br>Pas de minuteur</div>
+        </button>
+        
+        <button type="button" 
+                class="difficulty-btn" 
+                [class.active]="selectedDifficultyLevel === 'medium'"
+                (click)="selectDifficultyLevel('medium')">
+          <div class="difficulty-icon">🎯</div>
+          <div class="difficulty-label">Moyen</div>
+          <div class="difficulty-description">Mots moyens (4-7 lettres)<br>Quelques défis<br>Minuteur activé</div>
+        </button>
+        
+        <button type="button" 
+                class="difficulty-btn" 
+                [class.active]="selectedDifficultyLevel === 'hard'"
+                (click)="selectDifficultyLevel('hard')">
+          <div class="difficulty-icon">🔥</div>
+          <div class="difficulty-label">Difficile</div>
+          <div class="difficulty-description">Mots longs (6-10 lettres)<br>Complexité maximale<br>Une seule tentative</div>
+        </button>
+      </div>
+      
+      <!-- Description du niveau sélectionné -->
+      <div class="selected-difficulty-info">
+        <h4>{{ difficultyPresets[selectedDifficultyLevel].label }}</h4>
+        <p>{{ getSelectedDifficultyDescription() }}</p>
+      </div>
+    </div>
+
+    <!-- SECTION VITESSE DU JEU - CORRIGÉE -->
+    <div class="settings-section">
+      <h3>Vitesse du jeu</h3>
+      
+      <!-- Indicateur de vitesse recommandée -->
+      <div class="speed-recommendation" *ngIf="!isRecommendedSpeed()">
+        <div class="recommendation-badge">
+          <i class="fas fa-lightbulb"></i>
+          <span>Vitesse recommandée pour le niveau {{ selectedDifficultyLevel }}: {{ getRecommendedSpeed() }}</span>
+          <button 
+            type="button" 
+            class="btn-reset-speed"
+            (click)="resetSpeedToRecommended()">
+            Appliquer
+          </button>
+        </div>
+      </div>
+      
+      <!-- Curseur de vitesse -->
+      <div class="speed-control">
+        <label for="gameSpeed">Vitesse: {{ getCurrentSpeedLabel() }}</label>
+        
+        <div class="speed-slider-container">
+          <!-- Curseur -->
+          <input 
+            type="range" 
+            id="gameSpeed"
+            formControlName="gameSpeed"
+            min="1" 
+            max="10" 
+            step="1"
+            class="speed-slider"
+            [class.recommended]="isRecommendedSpeed()">
+          
+          <!-- Marqueurs de difficulté -->
+          <div class="speed-markers">
+            <div class="marker easy" [style.left.%]="(speedPresets.easy - 1) * 11.11">
+              <span class="marker-label">Facile</span>
+              <div class="marker-dot"></div>
+            </div>
+            <div class="marker medium" [style.left.%]="(speedPresets.medium - 1) * 11.11">
+              <span class="marker-label">Moyen</span>
+              <div class="marker-dot"></div>
+            </div>
+            <div class="marker hard" [style.left.%]="(speedPresets.hard - 1) * 11.11">
+              <span class="marker-label">Difficile</span>
+              <div class="marker-dot"></div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Description de la vitesse actuelle -->
+        <div class="speed-description">
+          <p>{{ getCurrentSpeedDescription() }}</p>
+        </div>
+        
+        <!-- Valeurs limites -->
+        <div class="speed-limits">
+          <span class="limit-left">Très lent</span>
+          <span class="current-value">{{ settingsForm.get('gameSpeed')?.value || 5 }}</span>
+          <span class="limit-right">Ultra rapide</span>
+        </div>
+      </div>
+    </div>
+    <!-- FIN SECTION VITESSE -->
+    
+    <!-- Section Paramètres de difficulté personnalisés -->
+    <div class="settings-section">
+      <h3>Paramètres avancés</h3>
+      <p class="section-description">Personnalisez les paramètres selon vos besoins (optionnel)</p>
+      
+      <div class="difficulty-parameters">
+        
+        <!-- Lettres similaires - Masqué pour facile -->
+        <div class="checkbox-group" *ngIf="shouldShowParameter('similarLetters')">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="similarLetters">
+            <span>Lettres similaires (b/d, p/q, m/n)</span>
+            <p class="explanation">Inclut des mots avec des lettres visuellement similaires pour augmenter la difficulté</p>
+          </label>
+        </div>
+        
+        <div class="advanced-parameter" *ngIf="shouldShowParameter('wordLength') && canSelectWordLength()">
+          <h4>Longueur des mots</h4>
+          <p class="parameter-description">
+            Pour le niveau {{ difficultyPresets[selectedDifficultyLevel].label }}, 
+            vous pouvez choisir des mots de {{ getWordLengthRange().min }} à {{ getWordLengthRange().max }} lettres.
+          </p>
+          
+          <!-- Options de sélection de longueur -->
+          <div class="word-length-options">
+            <div class="radio-group">
+              <label class="radio-option">
+                <input type="radio" 
+                       formControlName="wordLengthRange" 
+                       value="all">
+                <span>Toutes les longueurs disponibles ({{ getWordLengthRange().min }}-{{ getWordLengthRange().max }} lettres)</span>
+              </label>
+              
+              <label class="radio-option">
+                <input type="radio" 
+                       formControlName="wordLengthRange" 
+                       value="specific">
+                <span>Longueur spécifique</span>
+              </label>
+              
+              <label class="radio-option">
+                <input type="radio" 
+                       formControlName="wordLengthRange" 
+                       value="range">
+                <span>Plage personnalisée</span>
+              </label>
+            </div>
+            
+            <!-- Sélection de longueur spécifique -->
+            <div class="specific-length-selector" 
+                 *ngIf="settingsForm.get('wordLengthRange')?.value === 'specific'">
+              <label>Choisir la longueur des mots :</label>
+              <select formControlName="selectedWordLength" class="form-select">
+                <option value="">Sélectionner...</option>
+                <option *ngFor="let length of getAvailableWordLengths()" 
+                        [value]="length">
+                  {{ length }} lettre{{ length > 1 ? 's' : '' }}
+                </option>
+              </select>
+            </div>
+            
+            <!-- Plage personnalisée -->
+            <div class="range-selector" 
+                 *ngIf="settingsForm.get('wordLengthRange')?.value === 'range'">
+              <div class="range-inputs">
+                <div class="input-group">
+                  <label>Minimum :</label>
+                  <select formControlName="customMinWordLength" class="form-select">
+                    <option *ngFor="let length of getAvailableWordLengths()" 
+                            [value]="length">
+                      {{ length }}
+                    </option>
+                  </select>
+                </div>
+                
+                <div class="input-group">
+                  <label>Maximum :</label>
+                  <select formControlName="customMaxWordLength" class="form-select">
+                    <option *ngFor="let length of getAvailableWordLengths()" 
+                            [value]="length">
+                      {{ length }}
+                    </option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Aperçu des paramètres sélectionnés -->
+          <div class="word-length-preview" *ngIf="settingsForm.get('wordLengthRange')?.value !== 'all'">
+            <h5>Aperçu :</h5>
+            <div class="preview-content">
+              <span *ngIf="settingsForm.get('wordLengthRange')?.value === 'specific'">
+                Mots de {{ settingsForm.get('selectedWordLength')?.value }} lettre(s) uniquement
+              </span>
+              <span *ngIf="settingsForm.get('wordLengthRange')?.value === 'range'">
+                Mots de {{ settingsForm.get('customMinWordLength')?.value }} à 
+                {{ settingsForm.get('customMaxWordLength')?.value }} lettres
+              </span>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Complexité phonétique - Masqué pour facile -->
+        <div class="checkbox-group" *ngIf="shouldShowParameter('phoneticComplexity')">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="phoneticComplexity">
+            <span>Complexité phonétique ou orthographique</span>
+            <p class="explanation">Mots avec sons complexes, liaisons difficiles ou orthographe particulière</p>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Indices -->
+    <div class="settings-section">
+      <h3>Indices</h3>
+
+      <div class="hint-settings">
+        <div class="form-group">
+          <label>Type d'indice</label>
+          <p class="explanation">Détermine la nature de l'aide fournie aux joueurs</p>
+          <select formControlName="hintType" class="select-input">
+            <option value="visual">Visuel (images, couleurs)</option>
+            <option value="audio">Audio (prononciation, sons)</option>
+            <option value="textual">Textuel (définition, synonyme)</option>
+            <option value="mixed">Mixte (combinaison)</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label>Nombre d'indices par exercice</label>
+          <p class="explanation">Nombre maximum d'aides disponibles pour chaque question</p>
+          <div class="hint-count-display">
+            <span class="hint-count-value">{{ settingsForm.get('hintsPerExercise')?.value || 0 }}</span>
+            <span class="hint-count-label">indice(s) disponible(s)</span>
+          </div>
+          <input type="range" 
+                 formControlName="hintsPerExercise" 
+                 min="0" 
+                 max="5" 
+                 class="slider"
+                 [disabled]="true">
+          <div class="slider-labels">
+            <span>0</span>
+            <span>5</span>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Délai d'apparition des indices (secondes)</label>
+          <p class="explanation">Temps d'attente avant que le premier indice ne soit disponible</p>
+          <input type="number" formControlName="hintDelay" min="1" max="20" class="number-input">
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Minuteur - Masqué pour facile -->
+    <div class="settings-section" *ngIf="shouldShowParameter('timer')">
+      <h3>Minuteur</h3>
+
+      <div class="form-group toggle-group">
+        <label class="toggle-label">
+          <span>Activer le minuteur global</span>
+          <p class="explanation">Limite le temps total pour l'ensemble du jeu</p>
+          <label class="switch">
+            <input type="checkbox" formControlName="timerEnabled">
+            <span class="slider round"></span>
+          </label>
+        </label>
+
+        <div class="timer-duration" *ngIf="settingsForm.get('timerEnabled')?.value">
+          <label>Durée du minuteur global (secondes)</label>
+          <input type="number" formControlName="timerDuration" min="30" max="1800" step="15" class="number-input">
+          <div class="duration-display">{{ settingsForm.get('timerDuration')?.value || 60 }}s</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Seconde chance - Masqué pour difficile -->
+    <div class="settings-section" *ngIf="shouldShowParameter('secondChance')">
+      <h3>Seconde chance</h3>
+
+      <div class="form-group toggle-group">
+        <label class="toggle-label">
+          <span>Autoriser une seconde chance</span>
+          <p class="explanation">Permet aux joueurs de réessayer en cas d'erreur</p>
+          <label class="switch">
+            <input type="checkbox" formControlName="secondChanceEnabled">
+            <span class="slider round"></span>
+          </label>
+        </label>
+      </div>
+
+      <!-- Paramètres de seconde chance -->
+      <div class="second-chance-options" *ngIf="settingsForm.get('secondChanceEnabled')?.value">
+        
+        <div class="form-group">
+          <label>Nombre de tentatives maximum</label>
+          <select formControlName="maxAttempts" class="select-input">
+            <option value="2">2 tentatives</option>
+            <option value="3">3 tentatives</option>
+          </select>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="showEncouragementOnSecondTry">
+            <span>Afficher un message d'encouragement</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="autoHintOnSecondTry">
+            <span>Indice automatique à la seconde tentative</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="reduceOptionsOnSecondTry">
+            <span>Réduire les options à la seconde tentative</span>
+          </label>
+        </div>
+
+        <!-- Suggestion d'indice après erreur -->
+        <div class="form-group toggle-group">
+          <label class="toggle-label">
+            <span>Suggérer un indice après une erreur</span>
+            <p class="explanation">Propose automatiquement d'utiliser un indice après une mauvaise réponse</p>
+            <label class="switch">
+              <input type="checkbox" formControlName="showHintSuggestionAfterError">
+              <span class="slider round"></span>
+            </label>
+          </label>
+
+          <div class="hint-suggestion-delay" *ngIf="settingsForm.get('showHintSuggestionAfterError')?.value">
+            <label>Délai avant suggestion (secondes)</label>
+            <select formControlName="hintSuggestionDelay" class="select-input">
+              <option *ngFor="let option of hintSuggestionOptions" [value]="option.value">
+                {{ option.label }}
+              </option>
+            </select>
+          </div>
+        </div>
+
+        <div class="checkbox-group">
+          <label class="checkbox-label">
+            <input type="checkbox" formControlName="allowExtraHintAfterError">
+            <span>Autoriser un indice supplémentaire après erreur</span>
+            <p class="explanation">Permet d'utiliser un indice bonus en cas d'erreur</p>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Pénalités - Visible uniquement pour moyen -->
+    <div class="settings-section" *ngIf="shouldShowParameter('penalties')">
+      <h3>Système de pénalités</h3>
+
+      <div class="form-group toggle-group">
+        <label class="toggle-label">
+          <span>Pénaliser les tentatives incorrectes</span>
+          <p class="explanation">Réduit le score en cas d'erreurs multiples</p>
+          <label class="switch">
+            <input type="checkbox" formControlName="penalizeIncorrectAttempts">
+            <span class="slider round"></span>
+          </label>
+        </label>
+
+        <div class="penalty-settings" *ngIf="settingsForm.get('penalizeIncorrectAttempts')?.value">
+          <div class="form-group">
+            <label>Pourcentage de pénalité par tentative incorrecte (%)</label>
+            <input type="range" 
+                   formControlName="scorePenaltyPercentage" 
+                   min="0" 
+                   max="50" 
+                   step="5" 
+                   class="slider">
+            <div class="penalty-display">{{ settingsForm.get('scorePenaltyPercentage')?.value || 0 }}%</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Section Paramètres de jeu -->
+    <div class="settings-section">
+      <h3>Paramètres de jeu</h3>
+
+      <div class="form-group">
+        <label>Mode d'interaction</label>
+        <p class="explanation">Façon dont le joueur interagit avec les questions</p>
+        <div class="interaction-modes">
+          <label class="radio-label">
+            <input type="radio" value="mouse" formControlName="interactionMode">
+            <span>Clic/Tactile</span>
+          </label>
+          <label class="radio-label">
+            <input type="radio" value="keyboard" formControlName="interactionMode">
+            <span>Clavier</span>
+          </label>
+        </div>
+      </div>
+    </div>
+  
+    <!-- Section Options d'affichage -->
+    <div class="settings-section">
+      <h3>Options d'affichage</h3>
+
+      <div class="checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="hideWrongAnswers">
+          <span>Masquer les mauvaises réponses après sélection</span>
+        </label>
+
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="showFinalScore">
+          <span>Afficher le score final</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>Niveau de retour (feedback)</label>
+        <p class="explanation">Intensité des commentaires et encouragements pendant le jeu</p>
+        <select formControlName="feedbackLevel" class="select-input">
+          <option value="none">Aucun</option>
+          <option value="basic">Basique</option>
+          <option value="detailed">Détaillé</option>
+          <option value="very-detailed">Très détaillé</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="action-buttons">
+      <button type="button" class="reset-button" (click)="resetSettings()">Réinitialiser</button>
+      <button type="submit" class="save-button">Enregistrer</button>
+    </div>
+  </form>
+</div>

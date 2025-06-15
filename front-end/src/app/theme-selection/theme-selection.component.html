@@ -1,0 +1,17 @@
+
+<div class="theme-selection-wrapper">
+<div class="theme-selection-container">
+  <h1 class="title">Lancez-vous dans l'aventure quiz !</h1>
+  <div class="theme-grid">
+    <app-theme-box 
+      *ngFor="let theme of themes" 
+      [title]="theme.title"
+      [image]="theme.image"
+      [backgroundColor]="theme.colors.background"
+      [textColor]="theme.colors.text"
+      [buttonColor]="theme.colors.button"
+      [themeId]="theme.id">
+    </app-theme-box>
+  </div>
+</div>
+</div>

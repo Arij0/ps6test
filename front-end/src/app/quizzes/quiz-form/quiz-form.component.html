@@ -1,0 +1,110 @@
+<div class="quiz-form-container">
+  <h3>Créer un nouveau Quiz</h3>
+
+  <form class="quiz-form" (ngSubmit)="addQuiz()">
+    <!-- ───── Métadonnées du quiz ───── -->
+    <div class="form-field">
+      <label for="title">Titre</label>
+      <input id="title"
+             class="form-input"
+             type="text"
+             [(ngModel)]="Quiz.title"
+             name="title"
+             required>
+    </div>
+
+    <div class="form-field">
+      <label for="description">Description</label>
+      <input id="description"
+             class="form-input"
+             type="text"
+             [(ngModel)]="Quiz.description"
+             name="description"
+             required>
+    </div>
+
+    <div class="form-field">
+      
+      <label for="category">Catégorie</label>
+      <input id="category"
+             class="form-input"
+             type="text"
+             [(ngModel)]="Quiz.category"
+             name="category"
+             required>
+    </div>
+
+
+
+    <!-- Champ image -->
+<div class="form-field">
+  <label for="image">Image du quiz</label>
+  <input id="image"
+         class="form-input"
+         type="file"
+         (change)="onImageSelected($event)"
+         accept="image/*" />
+</div>
+
+
+<!-- Aperçu de l’image -->
+<div *ngIf="imagePreview">
+  <p>Aperçu :</p>
+  <img [src]="imagePreview" alt="Aperçu de l'image" width="200" />
+</div>
+
+
+    <div class="question-section">
+      <h3>Ajouter des questions</h3>
+      <button type="button" (click)="addQuestion()">➕ Ajouter une question</button>
+
+      <div *ngFor="let question of questions; let i = index" class="question-block">
+        <label>Question {{ i + 1 }}</label>
+        <input type="text"
+               [(ngModel)]="question.text"
+               [name]="'text-' + i"
+               placeholder="Intitulé de la question"
+               required>
+
+  <div class="options-intro-message">
+    Ajoutez les options de la question et cochez la bonne réponse.
+  </div>
+        <!-- Options -->
+        <div class="options">
+          <label *ngFor="let opt of [0,1,2,3]">
+            <input  type="text"
+                    [(ngModel)]="question.options[opt]"
+                    [name]="'opt-' + i + '-' + opt"
+                    placeholder="Option {{ opt + 1 }}">
+         <input  type="radio"
+        [value]="opt"
+        [(ngModel)]="question.correctAnswer"
+        [name]="'correct-' + i"> ✔
+
+          </label>
+        </div>
+
+
+  <p class="hint-message">Ajoutez 5 indices pour aider l'enfant</p>
+ <div *ngFor="let hint of question.hints; let j = index; trackBy: trackByIndex">
+  <input
+    type="text"
+    [(ngModel)]="question.hints[j]"
+    [name]="'hint-' + i + '-' + j"
+    placeholder="Indice {{ j + 1 }}">
+</div>
+
+
+
+        <button type="button" (click)="removeQuestion(i)">🗑 Supprimer</button>
+      </div>
+    </div>
+
+    <!-- ───── Bouton final ───── -->
+<button class="submit-btn" type="submit" #submitButton> Ajouter le Quiz
+    </button>
+
+  </form>
+</div>
+
+

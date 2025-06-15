@@ -24,13 +24,23 @@ module.exports = class BaseModel {
     }
   }
 
-  save() {
+ /* save() {
     try {
       fs.writeFileSync(this.filePath, JSON.stringify(this.items, null, 2), 'utf8')
     } catch (err) {
       logger.log(`Error while trying to save ${this.name}`)
     }
+  }*/
+ save() {
+  try {
+    console.log(`[DEBUG] Saving ${this.name} → ${this.filePath}`); // 👈 Ajoute cette ligne
+    fs.writeFileSync(this.filePath, JSON.stringify(this.items, null, 2), 'utf8');
+  } catch (err) {
+    logger.log(`Error while trying to save ${this.name} : ${err.message}`);
+    console.error('[ERROR]', err); // 👈 Et celle-ci pour afficher toute l'erreur (stack, code, etc.)
   }
+}
+
 
   get() {
     return this.items

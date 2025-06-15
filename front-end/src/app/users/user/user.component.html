@@ -1,0 +1,25 @@
+<!-- user.component.html -->
+<div class="user-card">
+  <div class="user-avatar">
+    <img [src]="user.imageUrl || '/assets/default-avatar.png'" 
+         [alt]="user.firstName + ' ' + user.lastName"
+         class="avatar-img">
+  </div>
+  
+  <div class="user-info">
+    <h3 class="user-name">{{ user.firstName }} {{ user.lastName }}</h3>
+    <div class="user-actions">
+      <button class="btn btn-primary" (click)="startGame()">
+        🎮 Jouer
+      </button>
+      
+      <button class="btn btn-secondary" (click)="openSettings()">
+        ⚙️ Paramètres
+      </button>
+      
+      <button class="btn btn-danger" (click)="onDeleteUser()">
+        🗑️ Supprimer
+      </button>
+    </div>
+  </div>
+</div>

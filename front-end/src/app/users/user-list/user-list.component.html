@@ -1,0 +1,11 @@
+<div class="user-list-container">
+  <h3>Liste des enfants</h3>
+  <div *ngIf="userList.length === 0">Aucun utilisateur trouvé.</div>
+  <div class="users">
+    <app-user
+      *ngFor="let user of userList"
+      [user]="user"
+      (deleteUser)="deleteUserHandler($event)">
+    </app-user>
+  </div>
+</div>

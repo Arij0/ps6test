@@ -1,0 +1,60 @@
+<div class="form-container">
+  <form [formGroup]="userForm" (ngSubmit)="addUser()">
+    
+    <!-- Prénom -->
+    <div class="form-group">
+      <input 
+        type="text" 
+        formControlName="firstName" 
+        placeholder="Prénom" 
+        [class.is-invalid]="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="userForm.get('firstName')?.invalid && userForm.get('firstName')?.touched">
+        Le prénom est requis
+      </div>
+    </div>
+
+    <!-- Nom -->
+    <div class="form-group">
+      <input 
+        type="text" 
+        formControlName="lastName" 
+        placeholder="Nom" 
+        [class.is-invalid]="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched"
+      />
+      <div class="invalid-feedback" *ngIf="userForm.get('lastName')?.invalid && userForm.get('lastName')?.touched">
+        Le nom est requis
+      </div>
+    </div>
+
+    <!-- Image depuis l'explorateur -->
+    <div class="form-group">
+      <input type="file" (change)="onFileSelected($event)" accept="image/*">
+    </div>
+
+   <!-- Aperçu de l'image -->
+    <div class="form-group" *ngIf="imagePreview">
+    <p>Aperçu :</p>
+    <img [src]="imagePreview" alt="Aperçu de l'image" width="200">
+    </div>
+         
+    <button 
+      type="submit" 
+      [disabled]="userForm.invalid"
+      class="btn btn-primary"
+    >
+      Ajouter
+    </button>
+
+    <!-- Debug info (à retirer en production) -->
+    <div class="debug-info" style="margin-top: 10px; font-size: 12px; color: #666;">
+      <p>Form valid: {{ userForm.valid }}</p>
+      <p>Form values: {{ userForm.getRawValue() | json }}</p>
+    </div>
+
+
+
+
+    
+  </form>
+</div>

@@ -1,0 +1,121 @@
+$new-quiz-green: #A8E6CF;
+$card-blue: #D0E6FF;
+$card-pink: #FFDDDE;
+$button-blue: #AEDFF7;
+$button-hover: #9AD3F7;
+
+
+.intro-message {
+  background-color: lighten($new-quiz-green, 30%);
+  color: darken($card-blue, 30%);
+  font-size: 1.7rem;
+  font-weight: 600;
+  padding: 20px 24px;
+  border-radius: 15px;
+  margin-bottom: 24px;
+  text-align: center;
+  box-shadow: 0 4px 10px rgba(168, 230, 207, 0.3);
+  font-family: 'Arial', sans-serif;
+}
+.new-quiz-wrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.new-quiz-btn {
+  background-color: $new-quiz-green;
+  color: #333;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: bold;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    background-color: darken($new-quiz-green, 5%);
+  }
+}
+
+.quiz-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.quiz-card {
+  background-color: lighten($card-blue, 5%);
+  padding: 0;
+  border-radius: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  border: 2px solid #e0f2ff;
+  overflow: hidden;
+
+  &:nth-child(even) {
+    background-color: $card-pink;
+  }
+
+  &:hover {
+    transform: scale(1.03);
+  }
+}
+
+/* Conteneur de l'image avec un ratio fixe */
+.quiz-image {
+  position: relative;
+  width: 100%;
+  padding-top: 56.25%; /* ratio 16:9 */
+  overflow: hidden;
+}
+
+.quiz-thumbnail {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Contenu textuel */
+.quiz-content {
+  padding: 16px;
+}
+
+.quiz-card h3 {
+  margin: 0 0 8px;
+  font-family:'Arial', sans-serif;
+  color: #444;
+}
+
+.quiz-card p {
+  font-size: 14px;
+  color: #555;
+}
+
+.quiz-category {
+  font-size: 0.9em;
+  color: #777;
+}
+
+/* Bouton Jouer */
+.quiz-card button {
+  margin-top: 14px;
+  background-color: $button-blue;
+  color: #333;
+  border: none;
+  padding: 10px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: $button-hover;
+  }
+}

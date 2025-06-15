@@ -1,0 +1,28 @@
+<div class="intro-message">
+   Choisis ton quiz préféré parmi notre sélection amusante !
+</div>
+
+<div class="new-quiz-wrapper">
+  <button class="new-quiz-btn" (click)="createNewQuiz()">
+    🧠 ➕ Nouveau quiz
+  </button>
+</div>
+
+
+<div class="quiz-list">
+  <div class="quiz-card" *ngFor="let quiz of quizzes">
+    <!-- ← AJOUT : Image du quiz -->
+    <div class="quiz-image" *ngIf="quiz.imageUrl">
+      <img [src]="quiz.imageUrl" [alt]="quiz.title" class="quiz-thumbnail">
+    </div>
+    <div class="quiz-content">
+      <h3>{{ quiz.title }}</h3>
+      <p *ngIf="quiz.description">{{ quiz.description }}</p>
+      <span class="quiz-category">📚 Catégorie : {{ quiz.category }}</span>
+      
+      <button *ngIf="quiz.id" (click)="startQuiz(quiz.id)" class="play-btn">
+        ▶️ Jouer
+      </button>
+    </div>
+  </div>
+</div>

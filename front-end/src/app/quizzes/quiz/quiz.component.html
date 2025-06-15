@@ -1,0 +1,9 @@
+<div *ngIf="!quiz" class="no-quiz-message">
+  Choisis ton quiz préféré parmi notre sélection amusante !
+</div>
+
+<div *ngIf="quiz">
+  <h2>{{ quiz.title }}</h2>
+  <p>{{ quiz.description }}</p>
+  <p><em>{{ quiz.category }}</em></p>
+</div>

@@ -1,0 +1,166 @@
+<!-- user-settings.component.html -->
+<div class="user-settings-container" *ngIf="!isLoading">
+  <div class="settings-header">
+    <h2>Paramètres de {{ currentUser?.firstName }} {{ currentUser?.lastName }}</h2>
+    <div class="user-avatar-small">
+      <img [src]="currentUser?.imageUrl || '/assets/default-avatar.png'" 
+           [alt]="currentUser?.firstName"
+           class="avatar-small">
+    </div>
+  </div>
+
+  <form [formGroup]="settingsForm" (ngSubmit)="onSaveSettings()" class="settings-form">
+    
+    <!-- Difficulté -->
+    <div class="form-section">
+      <h3>🎯 Niveau de difficulté</h3>
+      <div class="form-group">
+        <label for="difficulty">Niveau :</label>
+        <select id="difficulty" formControlName="difficulty" class="form-control">
+          <option *ngFor="let level of difficultyLevels" [value]="level.value">
+            {{ level.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="checkbox-group">
+        <div class="form-check">
+          <input type="checkbox" id="wordLength" formControlName="wordLength" class="form-check-input">
+          <label for="wordLength" class="form-check-label">Adapter la longueur des mots</label>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="similarLetters" formControlName="similarLetters" class="form-check-input">
+          <label for="similarLetters" class="form-check-label">Inclure des lettres similaires</label>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="phoneticComplexity" formControlName="phoneticComplexity" class="form-check-input">
+          <label for="phoneticComplexity" class="form-check-label">Complexité phonétique</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Indices -->
+    <div class="form-section">
+      <h3>💡 Configuration des indices</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="hintType">Type d'indice :</label>
+          <select id="hintType" formControlName="hintType" class="form-control">
+            <option *ngFor="let type of hintTypes" [value]="type.value">
+              {{ type.label }}
+            </option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="hintsPerExercise">Indices par exercice :</label>
+          <input type="number" id="hintsPerExercise" 
+                 formControlName="hintsPerExercise" 
+                 class="form-control" min="1" max="5">
+        </div>
+
+        <div class="form-group">
+          <label for="hintsCount">Nombre total d'indices :</label>
+          <input type="number" id="hintsCount" 
+                 formControlName="hintsCount" 
+                 class="form-control" min="1" max="10">
+        </div>
+
+        <div class="form-group">
+          <label for="hintDelay">Délai avant indice (secondes) :</label>
+          <input type="number" id="hintDelay" 
+                 formControlName="hintDelay" 
+                 class="form-control" min="0" max="60">
+        </div>
+      </div>
+    </div>
+
+    <!-- Gameplay -->
+    <div class="form-section">
+      <h3>🎮 Paramètres de jeu</h3>
+      <div class="form-row">
+        <div class="form-group">
+          <label for="gameSpeed">Vitesse du jeu (1-10) :</label>
+          <input type="range" id="gameSpeed" 
+                 formControlName="gameSpeed" 
+                 class="form-range" min="1" max="10">
+          <div class="range-value">{{ settingsForm.get('gameSpeed')?.value }}</div>
+        </div>
+
+        <div class="form-group">
+          <label for="interactionMode">Mode d'interaction :</label>
+          <select id="interactionMode" formControlName="interactionMode" class="form-control">
+            <option *ngFor="let mode of interactionModes" [value]="mode.value">
+              {{ mode.label }}
+            </option>
+          </select>
+        </div>
+      </div>
+
+      <div class="checkbox-group">
+        <div class="form-check">
+          <input type="checkbox" id="timerEnabled" formControlName="timerEnabled" class="form-check-input">
+          <label for="timerEnabled" class="form-check-label">Activer le minuteur</label>
+        </div>
+
+        <div class="form-group" *ngIf="settingsForm.get('timerEnabled')?.value">
+          <label for="timerDuration">Durée du minuteur (secondes) :</label>
+          <input type="number" id="timerDuration" 
+                 formControlName="timerDuration" 
+                 class="form-control" min="10" max="300">
+        </div>
+      </div>
+    </div>
+
+    <!-- Feedback -->
+    <div class="form-section">
+      <h3>📊 Retours et affichage</h3>
+      <div class="form-group">
+        <label for="feedbackLevel">Niveau de feedback :</label>
+        <select id="feedbackLevel" formControlName="feedbackLevel" class="form-control">
+          <option *ngFor="let level of feedbackLevels" [value]="level.value">
+            {{ level.label }}
+          </option>
+        </select>
+      </div>
+
+      <div class="checkbox-group">
+        <div class="form-check">
+          <input type="checkbox" id="hideWrongAnswers" formControlName="hideWrongAnswers" class="form-check-input">
+          <label for="hideWrongAnswers" class="form-check-label">Masquer les mauvaises réponses</label>
+        </div>
+
+        <div class="form-check">
+          <input type="checkbox" id="showFinalScore" formControlName="showFinalScore" class="form-check-input">
+          <label for="showFinalScore" class="form-check-label">Afficher le score final</label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Boutons d'action -->
+    <div class="form-actions">
+      <button type="button" class="btn btn-secondary" (click)="onCancel()">
+        Annuler
+      </button>
+      
+      <button type="button" class="btn btn-warning" (click)="onResetSettings()">
+        Réinitialiser
+      </button>
+      
+      <button type="submit" class="btn btn-primary" [disabled]="!settingsForm.valid">
+        Sauvegarder
+      </button>
+      
+      <button type="button" class="btn btn-success" (click)="startGameWithSettings()" [disabled]="!settingsForm.valid">
+        Sauvegarder et Jouer
+      </button>
+    </div>
+  </form>
+</div>
+
+<div *ngIf="isLoading" class="loading-container">
+  <div class="spinner"></div>
+  <p>Chargement des paramètres...</p>
+</div>

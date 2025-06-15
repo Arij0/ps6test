@@ -1,0 +1,26 @@
+[
+  {
+    "firstName": "alice",
+    "lastName": "paul",
+    "imageUrl": "assets/images/users/alice.jpg",
+    "id": 1748849146048
+  },
+  {
+    "firstName": "bob",
+    "lastName": "martin",
+    "imageUrl": "assets/images/users/bob.jpg",
+    "id": 1748849212266
+  },
+  {
+    "firstName": "sophie",
+    "lastName": "kart",
+    "imageUrl": "assets/images/users/sophie.jpg",
+    "id": 1748849293654
+  },
+  {
+    "firstName": "Maxim",
+    "lastName": "Jean",
+    "imageUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTedbBVf_hY3A0jop08ELGYtkufKSkEu2sPey_92WUy_db_F9JJ3t78U9M&s",
+    "id": 1749417986232
+  }
+]

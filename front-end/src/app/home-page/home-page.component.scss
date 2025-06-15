@@ -1,0 +1,207 @@
+/* home.component.css */
+.home-container {
+    font-family: 'Nunito', sans-serif;
+    color: #333;
+  }
+  
+  .hero {
+    display: flex;
+    padding: 60px 5%;
+    background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%);
+    border-radius: 0 0 30px 30px;
+    margin-bottom: 40px;
+    min-height: 500px;
+    align-items: center;
+  }
+  
+  .hero-content {
+    flex: 1;
+    padding-right: 40px;
+  }
+  
+  .hero-image {
+    flex: 1;
+    text-align: center;
+  }
+  
+  .hero-image img {
+    max-width: 100%;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-20px); }
+    100% { transform: translateY(0px); }
+  }
+  
+  .game-title {
+    font-size: 3.5rem;
+    color: #ff6b6b;
+    margin-bottom: 20px;
+    font-weight: 800;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .game-description {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    margin-bottom: 30px;
+  }
+  
+  .start-button {
+    background-color: #ff6b6b;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .start-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  }
+  
+  .features {
+    padding: 60px 5%;
+    text-align: center;
+  }
+  
+  .features h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #5f27cd;
+  }
+  
+  .features-container {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 30px;
+  }
+  
+  .feature-card {
+    background-color: white;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    flex: 1;
+    min-width: 250px;
+    transition: transform 0.3s ease;
+  }
+  
+  .feature-card:hover {
+    transform: translateY(-10px);
+  }
+  
+  .feature-icon {
+    background-color: #c8d6e5;
+    width: 70px;
+    height: 70px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 20px;
+  }
+  
+  .feature-icon i {
+    font-size: 30px;
+    color: #5f27cd;
+  }
+  
+  .feature-card h3 {
+    font-size: 1.4rem;
+    margin-bottom: 15px;
+    color: #ff6b6b;
+  }
+  
+  .games-preview {
+    padding: 60px 5%;
+    background-color: #f9f9f9;
+    text-align: center;
+    border-radius: 30px;
+  }
+  
+  .games-preview h2 {
+    font-size: 2.5rem;
+    margin-bottom: 40px;
+    color: #5f27cd;
+  }
+  
+  .games-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    margin-bottom: 40px;
+  }
+  
+  .game-preview {
+    background-color: white;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    transition: transform 0.3s ease;
+  }
+  
+  .game-preview:hover {
+    transform: translateY(-10px);
+  }
+  
+  .game-preview img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+  }
+  
+  .game-preview h3 {
+    padding: 20px;
+    font-size: 1.3rem;
+    color: #ff6b6b;
+  }
+  
+  .see-more-button {
+    background-color: #5f27cd;
+    color: white;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(95, 39, 205, 0.4);
+    transition: all 0.3s ease;
+  }
+  
+  .see-more-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(95, 39, 205, 0.6);
+  }
+  
+  .home-footer {
+    text-align: center;
+    padding: 30px 5%;
+    margin-top: 60px;
+    color: #888;
+  }
+  
+  @media (max-width: 992px) {
+    .hero {
+      flex-direction: column;
+      text-align: center;
+    }
+    
+    .hero-content {
+      padding-right: 0;
+      margin-bottom: 40px;
+    }
+    
+    .game-title {
+      font-size: 2.5rem;
+    }
+  }

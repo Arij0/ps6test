@@ -1,0 +1,7 @@
+<h3>Modifier le Quiz</h3>
+<form (ngSubmit)="updateQuiz()">
+  <input type="text" [(ngModel)]="quiz.title" name="title" required>
+  <input type="text" [(ngModel)]="quiz.description" name="description" required>
+  <input type="text" [(ngModel)]="quiz.category" name="category" required>
+  <button type="submit">Mettre à jour</button>
+</form>
