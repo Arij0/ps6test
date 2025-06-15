@@ -196,35 +196,52 @@ speedOptions = [
       this.updateQuestionsCount();
     }, 0);
   }
-  selectDifficultyLevel(level: 'easy' | 'medium' | 'hard'): void {
-    this.selectedDifficultyLevel = level;
-    const presetSettings = this.difficultyPresets[level].settings;
-    const recommendedSpeed = this.speedPresets[level];
-    // Mettre à jour le formulaire avec les paramètres prédéfinis
-    this.settingsForm.patchValue({
-      difficulty: level,
-      wordLength: true,
-      selectedWordLength: null,
-      wordLengthRange: 'all',
-      customMinWordLength: presetSettings.minWordLength,
-      customMaxWordLength: presetSettings.maxWordLength,
-      similarLetters: presetSettings.includeSimilarLetters,
-      phoneticComplexity: presetSettings.phoneticComplexityLevel > 1,
-      hintsPerExercise: presetSettings.hintsPerExercise,
-      timerEnabled: presetSettings.timerEnabled,
-      timerDuration: presetSettings.timerDuration,
-      gameSpeed: recommendedSpeed,
-      secondChanceEnabled: presetSettings.secondChanceEnabled,
-      maxAttempts: presetSettings.maxAttempts,
-      showEncouragementOnSecondTry: presetSettings.showEncouragementOnSecondTry,
-      autoHintOnSecondTry: presetSettings.autoHintOnSecondTry,
-      reduceOptionsOnSecondTry: presetSettings.reduceOptionsOnSecondTry,
-      penalizeIncorrectAttempts: presetSettings.penalizeIncorrectAttempts,
-      scorePenaltyPercentage: presetSettings.scorePenaltyPercentage
-    });
-    this.gameSettingsService.setGameSpeedByDifficulty(level);
-    console.log(`Niveau ${level} sélectionné avec les paramètres:`, presetSettings);
-  }
+ // Dans game-settings.component.ts, remplacez selectDifficultyLevel par :
+
+selectDifficultyLevel(level: 'easy' | 'medium' | 'hard'): void {
+  this.selectedDifficultyLevel = level;
+  const presetSettings = this.difficultyPresets[level].settings;
+  const recommendedSpeed = this.speedPresets[level];
+  
+  console.log(`[selectDifficultyLevel] Niveau ${level} sélectionné`);
+  console.log(`[selectDifficultyLevel] Preset settings:`, presetSettings);
+  
+  // Mettre à jour le formulaire avec les paramètres prédéfinis
+  this.settingsForm.patchValue({
+    difficulty: level,
+    
+    // CORRECTION: Gestion des longueurs de mots
+    wordLength: presetSettings.allowWordLengthSelection,
+    wordLengthRange: 'all', // Par défaut, utiliser toutes les longueurs autorisées
+    selectedWordLength: null, // Réinitialiser la sélection spécifique
+    customMinWordLength: presetSettings.minWordLength,
+    customMaxWordLength: presetSettings.maxWordLength,
+    
+    // Autres paramètres
+    similarLetters: presetSettings.includeSimilarLetters,
+    phoneticComplexity: presetSettings.phoneticComplexityLevel > 1,
+    phoneticComplexityLevel: presetSettings.phoneticComplexityLevel,
+    
+    hintsPerExercise: presetSettings.hintsPerExercise,
+    timerEnabled: presetSettings.timerEnabled,
+    timerDuration: presetSettings.timerDuration,
+    gameSpeed: recommendedSpeed,
+    
+    secondChanceEnabled: presetSettings.secondChanceEnabled,
+    maxAttempts: presetSettings.maxAttempts,
+    showEncouragementOnSecondTry: presetSettings.showEncouragementOnSecondTry,
+    autoHintOnSecondTry: presetSettings.autoHintOnSecondTry,
+    reduceOptionsOnSecondTry: presetSettings.reduceOptionsOnSecondTry,
+    penalizeIncorrectAttempts: presetSettings.penalizeIncorrectAttempts,
+    scorePenaltyPercentage: presetSettings.scorePenaltyPercentage
+  });
+  
+  // Mettre à jour la vitesse dans le service
+  this.gameSettingsService.setGameSpeedByDifficulty(level);
+  
+  console.log(`[selectDifficultyLevel] Formulaire mis à jour pour niveau ${level}`);
+  console.log(`[selectDifficultyLevel] Longueurs autorisées:`, presetSettings.wordLengthOptions);
+}
   getRecommendedSpeed(): number {
   return this.speedPresets[this.selectedDifficultyLevel];
 }
@@ -253,7 +270,9 @@ resetSpeedToRecommended(): void {
   this.settingsForm.patchValue({ gameSpeed: recommendedSpeed });
   this.gameSettingsService.setGameSpeed(recommendedSpeed);
 }
-  getAvailableWordLengths(): number[] {
+// Dans game-settings.component.ts, corrigez ces méthodes :
+
+getAvailableWordLengths(): number[] {
   const preset = this.difficultyPresets[this.selectedDifficultyLevel];
   return preset.settings.wordLengthOptions || [];
 }
@@ -270,24 +289,56 @@ canSelectWordLength(): boolean {
   const preset = this.difficultyPresets[this.selectedDifficultyLevel];
   return preset.settings.allowWordLengthSelection || false;
 }
-    shouldShowParameter(parameterName: string): boolean {
-    const preset = this.difficultyPresets[this.selectedDifficultyLevel];
-    
-    switch (parameterName) {
-      case 'similarLetters':
-        return this.selectedDifficultyLevel !== 'easy';
-      case 'phoneticComplexity':
-        return this.selectedDifficultyLevel !== 'easy';
-      case 'timer':
-        return this.selectedDifficultyLevel !== 'easy';
-      case 'secondChance':
-        return this.selectedDifficultyLevel !== 'hard';
-      case 'penalties':
-        return this.selectedDifficultyLevel === 'medium';
-      default:
-        return true;
+
+// NOUVELLE méthode pour afficher un aperçu
+getWordLengthPreview(): string {
+  const currentRange = this.settingsForm.get('wordLengthRange')?.value;
+  
+  switch (currentRange) {
+    case 'specific':
+      const selectedLength = this.settingsForm.get('selectedWordLength')?.value;
+      if (selectedLength) {
+        return `Mots de ${selectedLength} lettres (ex: ${this.getExampleWords(selectedLength, selectedLength)})`;
+      }
+      return 'Sélectionnez une longueur';
+      
+    case 'range':
+      const minLength = this.settingsForm.get('customMinWordLength')?.value;
+      const maxLength = this.settingsForm.get('customMaxWordLength')?.value;
+      if (minLength && maxLength) {
+        return `Mots de ${minLength} à ${maxLength} lettres (ex: ${this.getExampleWords(minLength, maxLength)})`;
+      }
+      return 'Définissez la plage';
+      
+    case 'all':
+    default:
+      const range = this.getWordLengthRange();
+      return `Mots de ${range.min} à ${range.max} lettres (ex: ${this.getExampleWords(range.min, range.max)})`;
+  }
+}
+
+// NOUVELLE méthode pour donner des exemples de mots
+getExampleWords(minLength: number, maxLength: number): string {
+  const examples: { [key: number]: string[] } = {
+    3: ['chat', 'eau', 'roi'],
+    4: ['maison', 'chat', 'beau'],
+    5: ['chien', 'table', 'rouge'],
+    6: ['jardin', 'bureau', 'famille'],
+    7: ['voiture', 'musique', 'chambre'],
+    8: ['ordinateur', 'telephone', 'escalier'],
+    9: ['difficile', 'merveilleux', 'ordinateur'],
+    10: ['fantastique', 'extraordinaire', 'magnifique']
+  };
+  
+  const possibleWords: string[] = [];
+  for (let length = minLength; length <= maxLength && length <= 10; length++) {
+    if (examples[length]) {
+      possibleWords.push(...examples[length].slice(0, 2)); // Prendre 2 exemples par longueur
     }
   }
+  
+  return possibleWords.slice(0, 3).join(', '); // Afficher max 3 exemples
+}
     getSelectedDifficultyDescription(): string {
     return this.difficultyPresets[this.selectedDifficultyLevel].description;
   }
@@ -330,48 +381,63 @@ canSelectWordLength(): boolean {
   }
 
 
-  initForm(): void {
-    const currentSettings = this.settingsService.getSettings();
-      this.selectedDifficultyLevel = currentSettings.difficulty || 'medium';
-      this.settingsForm = this.fb.group({
-      // Indices
-      difficulty: [[this.selectedDifficultyLevel],],
-      wordLength: [currentSettings.wordLength !== undefined ? currentSettings.wordLength : true],
-       selectedWordLength: [currentSettings.selectedWordLength || null], // Longueur spécifique choisie
-      wordLengthRange: [currentSettings.wordLengthRange || 'all'], // 'all', 'specific', 'range'
-      customMinWordLength: [currentSettings.customMinWordLength || null],
-      customMaxWordLength: [currentSettings.customMaxWordLength || null],
+  // Dans game-settings.component.ts, dans initForm(), ajoutez/modifiez ces champs :
+
+initForm(): void {
+  const currentSettings = this.settingsService.getSettings();
+  this.selectedDifficultyLevel = currentSettings.difficulty || 'medium';
+  
+  this.settingsForm = this.fb.group({
+    // Difficulté
+    difficulty: [this.selectedDifficultyLevel],
     
-      similarLetters: [currentSettings.similarLetters !== undefined ? currentSettings.similarLetters : true],
-      phoneticComplexity: [currentSettings.phoneticComplexity !== undefined ? currentSettings.phoneticComplexity : true],
-      hintType: ['text'],
-      hintsPerExercise: [this.gameSettingsService.getHintsToShow()],
-      hintsCount: [3],
-      hintDelay: [currentSettings.hintDelay || 5],
-      gameSpeed: [currentSettings.gameSpeed || 5],
-      interactionMode: [currentSettings.interactionMode || 'mouse'],
-      timerEnabled: [currentSettings.timerEnabled !== undefined ? currentSettings.timerEnabled : false],
-      timerDuration: [currentSettings.timerDuration || 60],
-      hideWrongAnswers: [currentSettings.hideWrongAnswers !== undefined ? currentSettings.hideWrongAnswers : true],
-      showFinalScore: [currentSettings.showFinalScore !== undefined ? currentSettings.showFinalScore : true],
-      feedbackLevel: [currentSettings.feedbackLevel || 'detailed'],
-      questions: this.questionsForm,
-      secondChanceEnabled: [currentSettings.secondChanceEnabled !== undefined ? currentSettings.secondChanceEnabled : false],
-      maxAttempts: [currentSettings.maxAttempts || 2, [Validators.min(2), Validators.max(3)]],
-      removeWrongOption: [currentSettings.removeWrongOption !== undefined ? currentSettings.removeWrongOption : true],
-      showEncouragementOnSecondTry: [currentSettings.showEncouragementOnSecondTry !== undefined ? currentSettings.showEncouragementOnSecondTry : true],
-       showHintSuggestionAfterError: [currentSettings.showHintSuggestionAfterError !== undefined ? currentSettings.showHintSuggestionAfterError : true],
+    // CORRECTION: Champs pour la gestion des longueurs
+    wordLength: [currentSettings.wordLength !== undefined ? currentSettings.wordLength : true],
+    wordLengthRange: [currentSettings.wordLengthRange || 'all'], // 'all', 'specific', 'range'
+    selectedWordLength: [currentSettings.selectedWordLength || null], // Pour mode 'specific'
+    customMinWordLength: [currentSettings.customMinWordLength || null], // Pour mode 'range'
+    customMaxWordLength: [currentSettings.customMaxWordLength || null], // Pour mode 'range'
+    
+    // Autres filtres
+    similarLetters: [currentSettings.similarLetters !== undefined ? currentSettings.similarLetters : true],
+    phoneticComplexity: [currentSettings.phoneticComplexity !== undefined ? currentSettings.phoneticComplexity : true],
+    phoneticComplexityLevel: [currentSettings.phoneticComplexityLevel || 1],
+    
+    // Indices et gameplay
+    hintType: ['text'],
+    hintsPerExercise: [this.gameSettingsService.getHintsToShow()],
+    hintsCount: [3],
+    hintDelay: [currentSettings.hintDelay || 5],
+    gameSpeed: [currentSettings.gameSpeed || 5],
+    interactionMode: [currentSettings.interactionMode || 'mouse'],
+    timerEnabled: [currentSettings.timerEnabled !== undefined ? currentSettings.timerEnabled : false],
+    timerDuration: [currentSettings.timerDuration || 60],
+    hideWrongAnswers: [currentSettings.hideWrongAnswers !== undefined ? currentSettings.hideWrongAnswers : true],
+    showFinalScore: [currentSettings.showFinalScore !== undefined ? currentSettings.showFinalScore : true],
+    feedbackLevel: [currentSettings.feedbackLevel || 'detailed'],
+    
+    // Questions personnalisées
+    questions: this.questionsForm,
+    
+    // Seconde chance
+    secondChanceEnabled: [currentSettings.secondChanceEnabled !== undefined ? currentSettings.secondChanceEnabled : false],
+    maxAttempts: [currentSettings.maxAttempts || 2, [Validators.min(2), Validators.max(3)]],
+    removeWrongOption: [currentSettings.removeWrongOption !== undefined ? currentSettings.removeWrongOption : true],
+    showEncouragementOnSecondTry: [currentSettings.showEncouragementOnSecondTry !== undefined ? currentSettings.showEncouragementOnSecondTry : true],
+    showHintSuggestionAfterError: [currentSettings.showHintSuggestionAfterError !== undefined ? currentSettings.showHintSuggestionAfterError : true],
     hintSuggestionDelay: [currentSettings.hintSuggestionDelay || 3, [Validators.min(0), Validators.max(10)]],
     allowExtraHintAfterError: [currentSettings.allowExtraHintAfterError !== undefined ? currentSettings.allowExtraHintAfterError : false],
-      autoHintOnSecondTry: [currentSettings.autoHintOnSecondTry !== undefined ? currentSettings.autoHintOnSecondTry : false],
-      customEncouragementMessage: [currentSettings.customEncouragementMessage || ''],
-      reduceOptionsOnSecondTry: [currentSettings.reduceOptionsOnSecondTry !== undefined ? currentSettings.reduceOptionsOnSecondTry : true],
-      highlightCorrectArea: [currentSettings.highlightCorrectArea !== undefined ? currentSettings.highlightCorrectArea : false],
-      penalizeIncorrectAttempts: [currentSettings.penalizeIncorrectAttempts !== undefined ? currentSettings.penalizeIncorrectAttempts : false],
-      scorePenaltyPercentage: [currentSettings.scorePenaltyPercentage || 25, [Validators.min(0), Validators.max(100)]]
-      
-    });
-  }
+    autoHintOnSecondTry: [currentSettings.autoHintOnSecondTry !== undefined ? currentSettings.autoHintOnSecondTry : false],
+    customEncouragementMessage: [currentSettings.customEncouragementMessage || ''],
+    reduceOptionsOnSecondTry: [currentSettings.reduceOptionsOnSecondTry !== undefined ? currentSettings.reduceOptionsOnSecondTry : true],
+    highlightCorrectArea: [currentSettings.highlightCorrectArea !== undefined ? currentSettings.highlightCorrectArea : false],
+    penalizeIncorrectAttempts: [currentSettings.penalizeIncorrectAttempts !== undefined ? currentSettings.penalizeIncorrectAttempts : false],
+    scorePenaltyPercentage: [currentSettings.scorePenaltyPercentage || 25, [Validators.min(0), Validators.max(100)]]
+  });
+  
+  // Appliquer les paramètres de difficulté par défaut au chargement
+  this.selectDifficultyLevel(this.selectedDifficultyLevel);
+}
   hintSuggestionOptions = [
   { value: 0, label: 'Immédiatement' },
   { value: 2, label: 'Après 2 secondes' },
@@ -933,105 +999,67 @@ private finalizeSettingsUpdate(formSettings: any, difficultySettings: any): void
   }
 }
 
-  calculateDifficultySettings(settings: any): any {
-  // Récupérer les préréglages de base pour le niveau choisi
-  const baseSettings = this.difficultyPresets[settings.difficulty].settings;
-  const result: any = {};
-  
-  // Toujours utiliser les paramètres de longueur du préréglage de difficulté
-  //result.minWordLength = baseSettings.minWordLength;
-  //result.maxWordLength = baseSettings.maxWordLength;
-  if (settings.wordLength && baseSettings.allowWordLengthSelection) {
-    switch (settings.wordLengthRange) {
-      case 'specific':
-        // L'utilisateur a choisi une longueur spécifique
-        result.minWordLength = settings.selectedWordLength;
-        result.maxWordLength = settings.selectedWordLength;
-        result.allowedWordLengths = [settings.selectedWordLength];
-        break;
-        
-      case 'range':
-        // L'utilisateur a défini une plage personnalisée dans l'intervalle autorisé
-        result.minWordLength = Math.max(settings.customMinWordLength, baseSettings.minWordLength);
-        result.maxWordLength = Math.min(settings.customMaxWordLength, baseSettings.maxWordLength);
-        result.allowedWordLengths = this.generateRangeArray(result.minWordLength, result.maxWordLength);
-        break;
-        
-      case 'all':
-      default:
-        // Utiliser toute la plage du niveau de difficulté
-        result.minWordLength = baseSettings.minWordLength;
-        result.maxWordLength = baseSettings.maxWordLength;
-        result.allowedWordLengths = baseSettings.wordLengthOptions;
-        break;
-    }
-  } else {
-    // Paramètres par défaut du niveau de difficulté
-    result.minWordLength = baseSettings.minWordLength;
-    result.maxWordLength = baseSettings.maxWordLength;
-    result.allowedWordLengths = baseSettings.wordLengthOptions;
-  }
-  
-  // Configurer les lettres similaires selon le préréglage ET le choix utilisateur
-  if (settings.similarLetters && baseSettings.includeSimilarLetters) {
-    result.includeSimilarLetters = true;
-    result.similarLetterGroups = this.similarLetterGroups;
-  } else {
-    result.includeSimilarLetters = false;
-    result.similarLetterGroups = [];
-  }
-  
-  // Configurer la complexité phonétique selon le préréglage ET le choix utilisateur
-  if (settings.phoneticComplexity && baseSettings.phoneticComplexityLevel > 1) {
-    result.phoneticComplexityLevel = baseSettings.phoneticComplexityLevel;
-    result.availableComplexityLevels = 
-      Array.from({length: baseSettings.phoneticComplexityLevel}, (_, i) => i + 1);
-  } else {
-    result.phoneticComplexityLevel = 1;
-    result.availableComplexityLevels = [1];
-  }
-  
-  // Ajouter tous les autres paramètres du préréglage de difficulté
-  result.hintsPerExercise = baseSettings.hintsPerExercise;
-  result.timerEnabled = baseSettings.timerEnabled;
-  result.timerDuration = baseSettings.timerDuration;
-  result.secondChanceEnabled = baseSettings.secondChanceEnabled;
-  result.maxAttempts = baseSettings.maxAttempts;
-  result.showEncouragementOnSecondTry = baseSettings.showEncouragementOnSecondTry;
-  result.autoHintOnSecondTry = baseSettings.autoHintOnSecondTry;
-  result.reduceOptionsOnSecondTry = baseSettings.reduceOptionsOnSecondTry;
-  result.penalizeIncorrectAttempts = baseSettings.penalizeIncorrectAttempts;
-  result.scorePenaltyPercentage = baseSettings.scorePenaltyPercentage;
-  
-  return result;
-}
+calculateDifficultySettings(settings: any)
+// Dans game-settings.component.ts, remplacez validateWordLengthSettings par :
+
 validateWordLengthSettings(): { isValid: boolean; errors: string[] } {
   const formValues = this.settingsForm.value;
   const errors: string[] = [];
   const preset = this.difficultyPresets[formValues.difficulty];
   
-  if (formValues.wordLength && preset.settings.allowWordLengthSelection) {
+  console.log('[validateWordLengthSettings] Validation des longueurs pour:', formValues.difficulty);
+  console.log('[validateWordLengthSettings] Form values:', formValues);
+  
+  if (formValues.wordLength === true && preset.settings.allowWordLengthSelection) {
     switch (formValues.wordLengthRange) {
       case 'specific':
         if (!formValues.selectedWordLength) {
           errors.push('Veuillez sélectionner une longueur de mot spécifique');
-        } else if (!preset.settings.wordLengthOptions.includes(formValues.selectedWordLength)) {
-          errors.push(`La longueur ${formValues.selectedWordLength} n'est pas autorisée pour le niveau ${preset.label}`);
+        } else {
+          const selectedLength = parseInt(formValues.selectedWordLength);
+          if (!preset.settings.wordLengthOptions.includes(selectedLength)) {
+            errors.push(`La longueur ${selectedLength} n'est pas autorisée pour le niveau ${preset.label}. Longueurs autorisées: ${preset.settings.wordLengthOptions.join(', ')}`);
+          }
         }
         break;
         
       case 'range':
-        if (!formValues.customMinWordLength || !formValues.customMaxWordLength) {
+        const customMin = parseInt(formValues.customMinWordLength);
+        const customMax = parseInt(formValues.customMaxWordLength);
+        
+        if (!customMin || !customMax) {
           errors.push('Veuillez définir les limites minimale et maximale');
-        } else if (formValues.customMinWordLength > formValues.customMaxWordLength) {
+        } else if (customMin > customMax) {
           errors.push('La longueur minimale ne peut pas être supérieure à la longueur maximale');
-        } else if (formValues.customMinWordLength < preset.settings.minWordLength || 
-                   formValues.customMaxWordLength > preset.settings.maxWordLength) {
+        } else if (customMin < preset.settings.minWordLength || customMax > preset.settings.maxWordLength) {
           errors.push(`La plage doit être entre ${preset.settings.minWordLength} et ${preset.settings.maxWordLength} pour le niveau ${preset.label}`);
+        } else {
+          // Vérifier que la plage contient au moins une longueur autorisée
+          let hasValidLength = false;
+          for (let i = customMin; i <= customMax; i++) {
+            if (preset.settings.wordLengthOptions.includes(i)) {
+              hasValidLength = true;
+              break;
+            }
+          }
+          if (!hasValidLength) {
+            errors.push(`Aucune longueur valide dans la plage ${customMin}-${customMax} pour le niveau ${preset.label}`);
+          }
         }
+        break;
+        
+      case 'all':
+        // Pas de validation nécessaire pour "all"
+        console.log('[validateWordLengthSettings] Mode "all" - pas de validation nécessaire');
+        break;
+        
+      default:
+        errors.push('Veuillez sélectionner un mode de filtrage des longueurs');
         break;
     }
   }
+  
+  console.log('[validateWordLengthSettings] Erreurs trouvées:', errors);
   
   return {
     isValid: errors.length === 0,

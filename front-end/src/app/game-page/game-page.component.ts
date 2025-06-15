@@ -156,33 +156,67 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.themeStyle = this.themeId ? (this.themeStyles[this.themeId] || {}) : {};
   }
 
-  private loadQuestions(): void {
+private loadQuestions(): void {
   if (!this.quizId) {
     console.error('Quiz ID manquant');
     return;
   }
 
-  console.log('[GamePageComponent] Chargement questions avec settings:', this.gameSettings);
+  // CORRECTION 1: Récupérer les settings actuels du service
+  const currentSettings = this.settingsService?.getSettings() || {};
+  
+  // CORRECTION 2: Construire les paramètres de filtrage explicites
+  const filterSettings = {
+    difficulty: currentSettings.difficulty || 'medium',
+    wordLength: currentSettings.selectedWordLength || null,
+    // Ajouter d'autres paramètres nécessaires
+    minWordLength: currentSettings.minWordLength,
+    maxWordLength: currentSettings.maxWordLength,
+    includeSimilarLetters: currentSettings.includeSimilarLetters,
+    phoneticComplexityLevel: currentSettings.phoneticComplexityLevel
+  };
 
-  // CORRECTION: Utiliser retrieveQuestionsWithSettings au lieu de retrieveQuestions
+  console.log('[GamePageComponent] Chargement questions avec settings:', filterSettings);
+
+  // CORRECTION 3: Utiliser les settings explicites
   this.subscriptions.add(
-    this.questionService.retrieveQuestionsWithSettings(this.quizId, this.gameSettings).subscribe({
+    this.questionService.retrieveQuestionsWithSettings(this.quizId, filterSettings).subscribe({
       next: (questions) => {
-        console.log('[GamePageComponent] Questions reçues:', questions.length);
+        console.log('[GamePageComponent] Questions reçues après filtrage:', questions.length);
         this.questions = questions;
         if (this.questions.length > 0) {
           this.initializeFirstQuestion();
         } else {
           console.warn('[GamePageComponent] Aucune question trouvée après filtrage');
-          // Optionnel: afficher un message à l'utilisateur
+          // Fallback: charger toutes les questions si le filtrage ne retourne rien
+          this.loadAllQuestions();
         }
       },
       error: (error) => {
         console.error('[GamePageComponent] Erreur lors du chargement des questions:', error);
+        // Fallback en cas d'erreur
+        this.loadAllQuestions();
       }
     })
   );
 }
+private loadAllQuestions(): void {
+  console.log('[GamePageComponent] Chargement de toutes les questions (fallback)');
+  this.subscriptions.add(
+    this.questionService.retrieveQuestions(this.quizId).subscribe({
+      next: (questions) => {
+        this.questions = questions;
+        if (this.questions.length > 0) {
+          this.initializeFirstQuestion();
+        }
+      },
+      error: (error) => {
+        console.error('[GamePageComponent] Erreur lors du chargement de toutes les questions:', error);
+      }
+    })
+  );
+}
+
   private initializeFirstQuestion(): void {
     this.currentQuestion = this.questions[this.currentQuestionIndex];
     this.displayOptions = [...this.currentQuestion.options];
