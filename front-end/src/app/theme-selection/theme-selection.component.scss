@@ -1,17 +1,18 @@
-
+:host {
+  display: block;
+  margin-top: 80px; /* ajuste selon la hauteur de ton menu */
+}
 .theme-selection-container {
   background-image: url('/assets/images/background.jpg');
   background-size: cover;
   background-position: center;
-  min-height: calc(100vh - 90px);//to fix the menu view
+  min-height: 100vh; /* Cover the whole viewport height */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  padding: 0px;
+  padding: 20px;
   box-sizing: border-box;
-    margin-top: 0;
-  margin-bottom: 0;
 }
 
 .title {
@@ -20,7 +21,7 @@
   font-size: 2.5em;
   padding-top: 20px;
   margin-bottom: 20px;
-  font-family: 'Arial', sans-serif; 
+  font-family: 'Arial', sans-serif; /* Choose a fun font */
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
 }
 

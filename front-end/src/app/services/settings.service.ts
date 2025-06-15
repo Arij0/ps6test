@@ -1,58 +1,14 @@
 // src/app/services/settings.service.ts
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs'; // Importez Observable
-
-// INTERFACE POUR LES PARAMÈTRES (TRÈS IMPORTANT POUR LE TYPAGE)
-// Ajoutez TOUS les champs de votre settingsForm ici avec leur type
-export interface AppSettings {
-  difficulty: 'easy' | 'medium' | 'hard';
-  wordLength: boolean;
-  selectedWordLength: number | null; // AJOUTÉ : Pour la longueur spécifique
-  wordLengthRange: 'all' | 'specific' | 'range'; // AJOUTÉ : Pour le type de sélection de longueur
-  customMinWordLength: number | null; // AJOUTÉ : Pour la longueur min personnalisée
-  customMaxWordLength: number | null; // AJOUTÉ : Pour la longueur max personnalisée
-
-  similarLetters: boolean;
-  phoneticComplexity: boolean; // Ou 'number' si c'est un niveau
-  hintType: string;
-  hintsPerExercise: number;
-  hintDelay: number;
-  gameSpeed: number;
-  interactionMode: string;
-  timerEnabled: boolean;
-  timerDuration: number;
-  hideWrongAnswers: boolean;
-  showFinalScore: boolean;
-  feedbackLevel: string;
-  similarLetterGroups: string[][]; // Devrait être [] par défaut si non utilisé
-  secondChanceEnabled: boolean;
-  maxAttempts: number;
-  removeWrongOption: boolean;
-  showEncouragementOnSecondTry: boolean;
-  autoHintOnSecondTry: boolean;
-  showHintSuggestionAfterError: boolean;
-  hintSuggestionDelay: number;
-  allowExtraHintAfterError: boolean;
-  customEncouragementMessage: string;
-  reduceOptionsOnSecondTry: boolean;
-  highlightCorrectArea: boolean;
-  penalizeIncorrectAttempts: boolean;
-  scorePenaltyPercentage: number;
-}
-
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SettingsService {
-  private defaultSettings: AppSettings = { // Utilisez votre interface ici
+  private defaultSettings = {
     difficulty: 'medium',
     wordLength: true,
-    selectedWordLength: null, // AJOUTÉ : Par défaut
-    wordLengthRange: 'all',   // AJOUTÉ : Par défaut
-    customMinWordLength: null, // AJOUTÉ : Par défaut
-    customMaxWordLength: null, // AJOUTÉ : Par défaut
-
     similarLetters: true,
     phoneticComplexity: true,
     hintType: 'text',
@@ -66,16 +22,18 @@ export class SettingsService {
     showFinalScore: true,
     feedbackLevel: 'detailed',
     similarLetterGroups: [],
-    secondChanceEnabled: true,
+     secondChanceEnabled: true,
     maxAttempts: 2,
     removeWrongOption: true,
     showEncouragementOnSecondTry: true,
-
-    autoHintOnSecondTry: false,
-    showHintSuggestionAfterError: true,
-    hintSuggestionDelay: 3,
-    allowExtraHintAfterError: true,
-
+    
+    // NOUVEAUX PARAMÈTRES pour la gestion des indices
+    autoHintOnSecondTry: false, // L'indice ne s'affiche PAS automatiquement
+    showHintSuggestionAfterError: true, // Mais on suggère à l'enfant de cliquer
+    hintSuggestionDelay: 3, // Délai avant d'afficher la suggestion
+    allowExtraHintAfterError: true, // Permet un indice supplémentaire après erreur
+    
+    // Paramètres d'encouragement
     customEncouragementMessage: '',
     reduceOptionsOnSecondTry: true,
     highlightCorrectArea: false,
@@ -83,26 +41,24 @@ export class SettingsService {
     scorePenaltyPercentage: 25
   };
 
-  private settingsSubject = new BehaviorSubject<AppSettings>(this.defaultSettings); // Utilisez AppSettings ici
-  public settings$: Observable<AppSettings> = this.settingsSubject.asObservable(); // Ajoutez 'Observable' pour le typage correct
+  private settingsSubject = new BehaviorSubject<any>(this.defaultSettings);
+  public settings$ = this.settingsSubject.asObservable();
 
   constructor() {
     // Charger les paramètres depuis localStorage s'ils existent
     const savedSettings = localStorage.getItem('gameSettings');
     if (savedSettings) {
-      // Fusionner avec defaultSettings pour s'assurer que tous les champs sont présents
-      this.settingsSubject.next({ ...this.defaultSettings, ...JSON.parse(savedSettings) });
+      this.settingsSubject.next(JSON.parse(savedSettings));
     }
   }
 
-  // Renommée de `updateSettings` en `setSettings` pour la cohérence avec mes exemples précédents
-  // SI VOUS VOULEZ GARDER `updateSettings`, il faudra l'utiliser partout.
-  // Je recommande de la garder `updateSettings` si c'est déjà utilisé ailleurs.
-  updateSettings(settings: AppSettings): void { // Utilisez AppSettings pour le paramètre
+  updateSettings(settings: any): void {
     try {
+      // Fusionner avec les paramètres existants
       const currentSettings = this.settingsSubject.value;
       const updatedSettings = { ...currentSettings, ...settings };
-
+      
+      // Sauvegarder dans localStorage et mettre à jour le BehaviorSubject
       localStorage.setItem('gameSettings', JSON.stringify(updatedSettings));
       this.settingsSubject.next(updatedSettings);
     } catch (error) {
@@ -110,7 +66,7 @@ export class SettingsService {
     }
   }
 
-  getSettings(): AppSettings { // Utilisez AppSettings pour le retour
+  getSettings(): any {
     return this.settingsSubject.value;
   }
 
@@ -118,8 +74,6 @@ export class SettingsService {
     localStorage.removeItem('gameSettings');
     this.settingsSubject.next(this.defaultSettings);
   }
-
-  // Ces méthodes spécifiques sont bien, elles utilisent updateSettings
   setSimilarLetterGroups(groups: string[][]): void {
     const currentSettings = this.settingsSubject.value;
     const updatedSettings = { ...currentSettings, similarLetterGroups: groups };
@@ -129,8 +83,7 @@ export class SettingsService {
   getSimilarLetterGroups(): string[][] {
     return this.settingsSubject.value.similarLetterGroups || [];
   }
-
-  getHintSettings(): any { // Considérez un type plus spécifique ici
+   getHintSettings(): any {
     const settings = this.settingsSubject.value;
     return {
       hintsPerExercise: settings.hintsPerExercise,
@@ -141,7 +94,7 @@ export class SettingsService {
     };
   }
 
-  getSecondChanceSettings(): any { // Considérez un type plus spécifique ici
+  getSecondChanceSettings(): any {
     const settings = this.settingsSubject.value;
     return {
       secondChanceEnabled: settings.secondChanceEnabled,
@@ -156,10 +109,12 @@ export class SettingsService {
     };
   }
 
+  // Méthode pour valider la cohérence des paramètres
   validateSettings(): { isValid: boolean; errors: string[] } {
     const settings = this.settingsSubject.value;
     const errors: string[] = [];
 
+    // Validation des indices
     if (settings.allowExtraHintAfterError && settings.hintsPerExercise === 0) {
       errors.push('Impossible d\'autoriser un indice supplémentaire si aucun indice n\'est disponible');
     }
@@ -168,12 +123,13 @@ export class SettingsService {
       errors.push('L\'indice automatique et l\'indice supplémentaire manuel ne peuvent pas être activés simultanément');
     }
 
+    // Validation de la seconde chance
     if (settings.secondChanceEnabled) {
       if (settings.maxAttempts < 2 || settings.maxAttempts > 3) {
         errors.push('Le nombre de tentatives doit être entre 2 et 3');
       }
 
-      if (settings.penalizeIncorrectAttempts &&
+      if (settings.penalizeIncorrectAttempts && 
           (settings.scorePenaltyPercentage < 0 || settings.scorePenaltyPercentage > 100)) {
         errors.push('Le pourcentage de pénalité doit être entre 0 et 100');
       }
@@ -184,4 +140,5 @@ export class SettingsService {
       errors: errors
     };
   }
+  
 }

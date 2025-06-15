@@ -9,7 +9,7 @@ const {
 } = require('./manager');
 const { manageAllErrors } = require('../../../utils/routes/error-management');
 
-// GET /quizzes/:quizId/questions?difficulty=easy&wordLength=4
+
 router.get('/', async (req, res) => {
   try {
     const quizId = Number(req.params.quizId);
@@ -43,5 +43,32 @@ router.get('/', async (req, res) => {
     manageAllErrors(res, e);
   }
 });
+// POST /quizzes/:quizId/questions/batch
+router.post('/batch', async (req, res) => {
+  try {
+    const quizId = Number(req.params.quizId);
+    const questionsToAdd = req.body;
+
+    if (!Array.isArray(questionsToAdd)) {
+      return res.status(400).json({ error: 'Le corps de la requête doit être un tableau de questions.' });
+    }
+
+    const newQuestions = questionsToAdd.map(q => {
+      return Question.create({
+        ...q,
+        quizId,
+        hasSimilarLetters: checkForSimilarLetters(q.word)
+      });
+    });
+
+    res.status(201).json({
+      message: `${newQuestions.length} questions ajoutées avec succès`,
+      questions: newQuestions
+    });
+  } catch (e) {
+    manageAllErrors(res, e);
+  }
+});
+
 
 module.exports = router;

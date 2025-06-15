@@ -186,51 +186,45 @@ speedOptions = [
     this.questionsForm = this.fb.array([]);
   }
 
- ngOnInit(): void {
-  this.detectNavigationSource();
-  this.initForm(); // Initialise le formulaire en premier
-  this.setupFormValidation(); // Configure les validations après l'initialisation du formulaire
-
-  // Ces deux lignes sont liées à la gestion des questions personnalisées via DOM.
-  // Elles peuvent rester, mais leur logique est distincte de la sauvegarde des settings.
-  setTimeout(() => {
-    this.initQuestionManagement();
-    this.updateQuestionsCount();
-  }, 0);
-}
-selectDifficultyLevel(level: 'easy' | 'medium' | 'hard'): void {
-  this.selectedDifficultyLevel = level;
-  const presetSettings = this.difficultyPresets[level].settings;
-  const recommendedSpeed = this.speedPresets[level];
-
-  this.settingsForm.patchValue({
-    difficulty: level,
-    wordLength: presetSettings.allowWordLengthSelection,
-    selectedWordLength: null, // Réinitialise pour le nouveau preset
-    wordLengthRange: 'all',   // Par défaut pour le preset (ajuster si un preset a une autre logique)
-    customMinWordLength: presetSettings.minWordLength,
-    customMaxWordLength: presetSettings.maxWordLength,
-    similarLetters: presetSettings.includeSimilarLetters,
-    phoneticComplexity: presetSettings.phoneticComplexityLevel > 1,
-    hintsPerExercise: presetSettings.hintsPerExercise,
-    timerEnabled: presetSettings.timerEnabled,
-    timerDuration: presetSettings.timerDuration,
-    gameSpeed: recommendedSpeed,
-    secondChanceEnabled: presetSettings.secondChanceEnabled,
-    maxAttempts: presetSettings.maxAttempts,
-    showEncouragementOnSecondTry: presetSettings.showEncouragementOnSecondTry,
-    autoHintOnSecondTry: presetSettings.autoHintOnSecondTry,
-    reduceOptionsOnSecondTry: presetSettings.reduceOptionsOnSecondTry,
-    penalizeIncorrectAttempts: presetSettings.penalizeIncorrectAttempts,
-    scorePenaltyPercentage: presetSettings.scorePenaltyPercentage
-  });
-
-  this.gameSettingsService.setGameSpeedByDifficulty(level);
-  console.log(`Niveau ${level} sélectionné et paramètres mis à jour.`);
-
-  // TRÈS IMPORTANT : Appel de la méthode de sauvegarde
-  this.saveSettings();
-}
+  ngOnInit(): void {
+    this.detectNavigationSource(); 
+    this.initForm();
+    
+    this.setupFormValidation()
+    setTimeout(() => {
+      this.initQuestionManagement();
+      this.updateQuestionsCount();
+    }, 0);
+  }
+  selectDifficultyLevel(level: 'easy' | 'medium' | 'hard'): void {
+    this.selectedDifficultyLevel = level;
+    const presetSettings = this.difficultyPresets[level].settings;
+    const recommendedSpeed = this.speedPresets[level];
+    // Mettre à jour le formulaire avec les paramètres prédéfinis
+    this.settingsForm.patchValue({
+      difficulty: level,
+      wordLength: true,
+      selectedWordLength: null,
+      wordLengthRange: 'all',
+      customMinWordLength: presetSettings.minWordLength,
+      customMaxWordLength: presetSettings.maxWordLength,
+      similarLetters: presetSettings.includeSimilarLetters,
+      phoneticComplexity: presetSettings.phoneticComplexityLevel > 1,
+      hintsPerExercise: presetSettings.hintsPerExercise,
+      timerEnabled: presetSettings.timerEnabled,
+      timerDuration: presetSettings.timerDuration,
+      gameSpeed: recommendedSpeed,
+      secondChanceEnabled: presetSettings.secondChanceEnabled,
+      maxAttempts: presetSettings.maxAttempts,
+      showEncouragementOnSecondTry: presetSettings.showEncouragementOnSecondTry,
+      autoHintOnSecondTry: presetSettings.autoHintOnSecondTry,
+      reduceOptionsOnSecondTry: presetSettings.reduceOptionsOnSecondTry,
+      penalizeIncorrectAttempts: presetSettings.penalizeIncorrectAttempts,
+      scorePenaltyPercentage: presetSettings.scorePenaltyPercentage
+    });
+    this.gameSettingsService.setGameSpeedByDifficulty(level);
+    console.log(`Niveau ${level} sélectionné avec les paramètres:`, presetSettings);
+  }
   getRecommendedSpeed(): number {
   return this.speedPresets[this.selectedDifficultyLevel];
 }
@@ -261,12 +255,7 @@ resetSpeedToRecommended(): void {
 }
   getAvailableWordLengths(): number[] {
   const preset = this.difficultyPresets[this.selectedDifficultyLevel];
-  // Générer un tableau de longueurs basé sur min et max
-  const lengths = [];
-  for (let i = preset.settings.minWordLength; i <= preset.settings.maxWordLength; i++) {
-    lengths.push(i);
-  }
-  return lengths;
+  return preset.settings.wordLengthOptions || [];
 }
 
 getWordLengthRange(): { min: number, max: number } {
@@ -340,67 +329,49 @@ canSelectWordLength(): boolean {
     }
   }
 
-initForm(): void {
-  const currentSettings = this.settingsService.getSettings();
-  this.selectedDifficultyLevel = currentSettings.difficulty || 'medium';
 
-  this.settingsForm = this.fb.group({
-    // 1. CORRECTION MAJEURE ICI : 'difficulty' ne doit PAS être un tableau.
-    // Votre SettingsService et le GamePageComponent s'attendent à un simple string ('easy', 'medium', 'hard').
-    difficulty: [this.selectedDifficultyLevel], // AVANT : [[this.selectedDifficultyLevel],]
-
-    wordLength: [currentSettings.wordLength !== undefined ? currentSettings.wordLength : true],
-    selectedWordLength: [currentSettings.selectedWordLength || null],
-    wordLengthRange: [currentSettings.wordLengthRange || 'all'],
-    customMinWordLength: [currentSettings.customMinWordLength || null],
-    customMaxWordLength: [currentSettings.customMaxWordLength || null],
-
-    similarLetters: [currentSettings.similarLetters !== undefined ? currentSettings.similarLetters : true],
-    phoneticComplexity: [currentSettings.phoneticComplexity !== undefined ? currentSettings.phoneticComplexity : true],
-    hintType: ['text'],
-    hintsPerExercise: [this.gameSettingsService.getHintsToShow()],
-    hintsCount: [3],
-    hintDelay: [currentSettings.hintDelay || 5],
-    gameSpeed: [currentSettings.gameSpeed || 5],
-    interactionMode: [currentSettings.interactionMode || 'mouse'],
-    timerEnabled: [currentSettings.timerEnabled !== undefined ? currentSettings.timerEnabled : false],
-    timerDuration: [currentSettings.timerDuration || 60],
-    hideWrongAnswers: [currentSettings.hideWrongAnswers !== undefined ? currentSettings.hideWrongAnswers : true],
-    showFinalScore: [currentSettings.showFinalScore !== undefined ? currentSettings.showFinalScore : true],
-    feedbackLevel: [currentSettings.feedbackLevel || 'detailed'],
-    questions: this.questionsForm, // C'est pour vos questions personnalisées, on ne touche pas.
-    secondChanceEnabled: [currentSettings.secondChanceEnabled !== undefined ? currentSettings.secondChanceEnabled : false],
-    maxAttempts: [currentSettings.maxAttempts || 2, [Validators.min(2), Validators.max(3)]],
-    removeWrongOption: [currentSettings.removeWrongOption !== undefined ? currentSettings.removeWrongOption : true],
-    showEncouragementOnSecondTry: [currentSettings.showEncouragementOnSecondTry !== undefined ? currentSettings.showEncouragementOnSecondTry : true],
-    showHintSuggestionAfterError: [currentSettings.showHintSuggestionAfterError !== undefined ? currentSettings.showHintSuggestionAfterError : true],
+  initForm(): void {
+    const currentSettings = this.settingsService.getSettings();
+      this.selectedDifficultyLevel = currentSettings.difficulty || 'medium';
+      this.settingsForm = this.fb.group({
+      // Indices
+      difficulty: [[this.selectedDifficultyLevel],],
+      wordLength: [currentSettings.wordLength !== undefined ? currentSettings.wordLength : true],
+       selectedWordLength: [currentSettings.selectedWordLength || null], // Longueur spécifique choisie
+      wordLengthRange: [currentSettings.wordLengthRange || 'all'], // 'all', 'specific', 'range'
+      customMinWordLength: [currentSettings.customMinWordLength || null],
+      customMaxWordLength: [currentSettings.customMaxWordLength || null],
+    
+      similarLetters: [currentSettings.similarLetters !== undefined ? currentSettings.similarLetters : true],
+      phoneticComplexity: [currentSettings.phoneticComplexity !== undefined ? currentSettings.phoneticComplexity : true],
+      hintType: ['text'],
+      hintsPerExercise: [this.gameSettingsService.getHintsToShow()],
+      hintsCount: [3],
+      hintDelay: [currentSettings.hintDelay || 5],
+      gameSpeed: [currentSettings.gameSpeed || 5],
+      interactionMode: [currentSettings.interactionMode || 'mouse'],
+      timerEnabled: [currentSettings.timerEnabled !== undefined ? currentSettings.timerEnabled : false],
+      timerDuration: [currentSettings.timerDuration || 60],
+      hideWrongAnswers: [currentSettings.hideWrongAnswers !== undefined ? currentSettings.hideWrongAnswers : true],
+      showFinalScore: [currentSettings.showFinalScore !== undefined ? currentSettings.showFinalScore : true],
+      feedbackLevel: [currentSettings.feedbackLevel || 'detailed'],
+      questions: this.questionsForm,
+      secondChanceEnabled: [currentSettings.secondChanceEnabled !== undefined ? currentSettings.secondChanceEnabled : false],
+      maxAttempts: [currentSettings.maxAttempts || 2, [Validators.min(2), Validators.max(3)]],
+      removeWrongOption: [currentSettings.removeWrongOption !== undefined ? currentSettings.removeWrongOption : true],
+      showEncouragementOnSecondTry: [currentSettings.showEncouragementOnSecondTry !== undefined ? currentSettings.showEncouragementOnSecondTry : true],
+       showHintSuggestionAfterError: [currentSettings.showHintSuggestionAfterError !== undefined ? currentSettings.showHintSuggestionAfterError : true],
     hintSuggestionDelay: [currentSettings.hintSuggestionDelay || 3, [Validators.min(0), Validators.max(10)]],
     allowExtraHintAfterError: [currentSettings.allowExtraHintAfterError !== undefined ? currentSettings.allowExtraHintAfterError : false],
-    autoHintOnSecondTry: [currentSettings.autoHintOnSecondTry !== undefined ? currentSettings.autoHintOnSecondTry : false],
-    customEncouragementMessage: [currentSettings.customEncouragementMessage || ''],
-    reduceOptionsOnSecondTry: [currentSettings.reduceOptionsOnSecondTry !== undefined ? currentSettings.reduceOptionsOnSecondTry : true],
-    highlightCorrectArea: [currentSettings.highlightCorrectArea !== undefined ? currentSettings.highlightCorrectArea : false],
-    penalizeIncorrectAttempts: [currentSettings.penalizeIncorrectAttempts !== undefined ? currentSettings.penalizeIncorrectAttempts : false],
-    scorePenaltyPercentage: [currentSettings.scorePenaltyPercentage || 25, [Validators.min(0), Validators.max(100)]]
-  });
-
-  // 2. AJOUTS CLÉS : Les abonnements aux changements de valeur pour déclencher la sauvegarde.
-  // Chaque fois que l'utilisateur modifie un de ces paramètres dans l'interface,
-  // la méthode `saveSettings()` sera appelée pour mettre à jour le SettingsService.
-  this.settingsForm.get('difficulty')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('wordLength')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('selectedWordLength')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('wordLengthRange')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('customMinWordLength')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('customMaxWordLength')?.valueChanges.subscribe(() => this.saveSettings());
-
-  // Vous pouvez ajouter d'autres abonnements ici pour d'autres paramètres
-  // que vous voulez sauvegarder automatiquement dès qu'ils sont modifiés.
-  this.settingsForm.get('timerEnabled')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('timerDuration')?.valueChanges.subscribe(() => this.saveSettings());
-  this.settingsForm.get('hintsPerExercise')?.valueChanges.subscribe(() => this.saveSettings());
-  // ... continuez pour tous les contrôles pertinents
-}
+      autoHintOnSecondTry: [currentSettings.autoHintOnSecondTry !== undefined ? currentSettings.autoHintOnSecondTry : false],
+      customEncouragementMessage: [currentSettings.customEncouragementMessage || ''],
+      reduceOptionsOnSecondTry: [currentSettings.reduceOptionsOnSecondTry !== undefined ? currentSettings.reduceOptionsOnSecondTry : true],
+      highlightCorrectArea: [currentSettings.highlightCorrectArea !== undefined ? currentSettings.highlightCorrectArea : false],
+      penalizeIncorrectAttempts: [currentSettings.penalizeIncorrectAttempts !== undefined ? currentSettings.penalizeIncorrectAttempts : false],
+      scorePenaltyPercentage: [currentSettings.scorePenaltyPercentage || 25, [Validators.min(0), Validators.max(100)]]
+      
+    });
+  }
   hintSuggestionOptions = [
   { value: 0, label: 'Immédiatement' },
   { value: 2, label: 'Après 2 secondes' },
@@ -818,36 +789,101 @@ shouldShowBothHintTypes(attemptNumber: number): { auto: boolean, manual: boolean
   }
 
 onSettingsChange(): void {
+  // Valider les paramètres
   const validation = this.validateSecondChanceSettings();
-  const wordLengthValidation = this.validateWordLengthSettings(); // Assurez-vous que cette méthode existe
-
+  const wordLengthValidation = this.validateWordLengthSettings();
+  
   if (!validation.isValid) {
-    console.error('Erreurs de validation (seconde chance):', validation.errors);
-    alert('Erreurs de validation (seconde chance):\n' + validation.errors.join('\n'));
-    return;
-  }
-  if (!wordLengthValidation.isValid) {
-    console.error('Erreurs de validation (longueur de mot):', wordLengthValidation.errors);
-    alert('Erreurs de validation (longueur de mot):\n' + wordLengthValidation.errors.join('\n'));
+    console.error('Erreurs de validation:', validation.errors);
+    alert('Erreurs de validation:\n' + validation.errors.join('\n'));
     return;
   }
 
-  // TRÈS IMPORTANT : Appel de la méthode de sauvegarde principale
-  this.saveSettings();
-
-  // --- Logique pour les questions personnalisées (distincte de la sauvegarde des settings) ---
+  const formSettings = this.settingsForm.value;
+  const difficultySettings = this.calculateDifficultySettings(formSettings);
   const customQuestions = this.collectCustomQuestions();
-  if (customQuestions.length > 0) {
-    // Il faut un quizId valide ici. C'est un exemple.
-    const currentQuizId = 1; // <--- REMPLACEZ PAR LE VRAI ID DU QUIZ !
-    this.questionService.addQuestions(currentQuizId, customQuestions);
-    console.log('Questions personnalisées ajoutées.');
-  }
-  // -----------------------------------------------------------------------------------------
 
-  // (Optionnel) Si vous voulez émettre un événement ou naviguer après la sauvegarde
-  // this.settingsChanged.emit(this.settingsForm.value);
-  // this.router.navigate(['/some-other-page']);
+  // Fusionner les paramètres
+  const completeSettings = {
+    ...formSettings,
+    ...difficultySettings
+  };
+
+  console.log('[GameSettingsComponent] Settings complets:', completeSettings);
+
+  // Gérer les questions personnalisées
+  if (customQuestions.length > 0) {
+    const currentQuizId = this.quizService.getCurrentQuizId();
+    if (currentQuizId) {
+      console.log('Ajout de', customQuestions.length, 'questions personnalisées au quiz', currentQuizId);
+      
+      this.questionService.addQuestions(parseInt(currentQuizId), customQuestions).subscribe({
+        next: (response) => {
+          console.log('Questions ajoutées:', response);
+          // Maintenant appliquer les filtres avec les settings complets
+          this.questionService.retrieveQuestionsWithSettings(parseInt(currentQuizId), completeSettings).subscribe({
+            next: (filteredQuestions) => {
+              console.log('Questions filtrées:', filteredQuestions);
+              this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+            },
+            error: (error) => {
+              console.error('Erreur lors du filtrage:', error);
+              this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+            }
+          });
+        },
+        error: (error) => {
+          console.error('Erreur lors de l\'ajout des questions:', error);
+          this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+        }
+      });
+    } else {
+      console.warn('Aucun quizId actuel trouvé');
+      this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+    }
+  } else {
+    // Pas de questions personnalisées, appliquer directement les filtres
+    const currentQuizId = this.quizService.getCurrentQuizId();
+    if (currentQuizId) {
+      this.questionService.retrieveQuestionsWithSettings(parseInt(currentQuizId), completeSettings).subscribe({
+        next: (filteredQuestions) => {
+          console.log('Questions filtrées (sans questions custom):', filteredQuestions);
+          this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+        },
+        error: (error) => {
+          console.error('Erreur lors du filtrage (sans questions custom):', error);
+          this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+        }
+      });
+    } else {
+      this.finalizeSettingsUpdate(completeSettings, difficultySettings);
+    }
+  }
+}
+private finalizeSettingsUpdate(formSettings: any, difficultySettings: any): void {
+  const completeSettings = {
+    ...formSettings,
+    ...difficultySettings,
+    similarLetterGroups: this.similarLetterGroups,
+    hintsPerExercise: formSettings.hintsPerExercise,
+    hintsCount: formSettings.hintsCount,
+    gameSpeed: formSettings.gameSpeed,
+    getEncouragementMessage: () => this.getEncouragementMessage(),
+    calculateScoreWithPenalty: (score: number, attempt: number) => this.calculateScoreWithPenalty(score, attempt),
+    shouldShowAutoHint: (attempt: number) => this.shouldShowAutoHint(attempt),
+    getOptionsCountForAttempt: (attempt: number, total: number) => this.getOptionsCountForAttempt(attempt, total),
+    shouldShowHintSuggestion: (attempt: number) => this.shouldShowHintSuggestion(attempt),
+    getHintSuggestionDelay: () => this.getHintSuggestionDelay(),
+    canShowExtraHintAfterError: (attempt: number, hintsUsed: number) => this.canShowExtraHintAfterError(attempt, hintsUsed)
+  };
+
+  this.settingsService.updateSettings(completeSettings);
+  this.gameSettingsService.setHintsToShow(formSettings.hintsPerExercise);
+  this.gameSettingsService.setHideWrongAnswers(formSettings.hideWrongAnswers);
+  this.gameSettingsService.setGameSpeed(formSettings.gameSpeed);
+  
+  this.settingsChanged.emit(completeSettings);
+  this.handleRedirection();
 }
  private handleRedirection(): void {
   console.log('handleRedirection - navigationSource:', this.navigationSource);
@@ -923,17 +959,17 @@ onSettingsChange(): void {
         
       case 'all':
       default:
+        // Utiliser toute la plage du niveau de difficulté
         result.minWordLength = baseSettings.minWordLength;
         result.maxWordLength = baseSettings.maxWordLength;
-        // CORRECTION : Générer le tableau au lieu d'utiliser wordLengthOptions qui n'existe pas
-        result.allowedWordLengths = this.generateRangeArray(baseSettings.minWordLength, baseSettings.maxWordLength);
+        result.allowedWordLengths = baseSettings.wordLengthOptions;
         break;
     }
   } else {
+    // Paramètres par défaut du niveau de difficulté
     result.minWordLength = baseSettings.minWordLength;
     result.maxWordLength = baseSettings.maxWordLength;
-    // CORRECTION : Même chose ici
-    result.allowedWordLengths = this.generateRangeArray(baseSettings.minWordLength, baseSettings.maxWordLength);
+    result.allowedWordLengths = baseSettings.wordLengthOptions;
   }
   
   // Configurer les lettres similaires selon le préréglage ET le choix utilisateur
@@ -969,7 +1005,6 @@ onSettingsChange(): void {
   
   return result;
 }
-
 validateWordLengthSettings(): { isValid: boolean; errors: string[] } {
   const formValues = this.settingsForm.value;
   const errors: string[] = [];
@@ -980,12 +1015,8 @@ validateWordLengthSettings(): { isValid: boolean; errors: string[] } {
       case 'specific':
         if (!formValues.selectedWordLength) {
           errors.push('Veuillez sélectionner une longueur de mot spécifique');
-        } else {
-          // CORRECTION ICI : Utiliser minWordLength et maxWordLength au lieu de wordLengthOptions
-          const selectedLength = formValues.selectedWordLength;
-          if (selectedLength < preset.settings.minWordLength || selectedLength > preset.settings.maxWordLength) {
-            errors.push(`La longueur ${selectedLength} n'est pas autorisée pour le niveau ${preset.label}. Plage autorisée: ${preset.settings.minWordLength}-${preset.settings.maxWordLength}`);
-          }
+        } else if (!preset.settings.wordLengthOptions.includes(formValues.selectedWordLength)) {
+          errors.push(`La longueur ${formValues.selectedWordLength} n'est pas autorisée pour le niveau ${preset.label}`);
         }
         break;
         
@@ -1051,34 +1082,4 @@ private generateRangeArray(min: number, max: number): number[] {
     // Afficher un message de confirmation
      this.handleRedirection();
   }
-
-  private saveSettings(): void {
-  // Vérifie si le formulaire est valide avant de tenter de sauvegarder.
-  // C'est une bonne pratique pour éviter de sauvegarder des données incomplètes ou erronées.
-  if (this.settingsForm.valid) {
-    // 1. Récupère toutes les valeurs du formulaire.
-    // C'est un objet JavaScript qui contient { difficulty: 'easy', wordLength: true, ... }
-    const currentFormValues = this.settingsForm.value;
-
-    // 2. LA LIGNE LA PLUS IMPORTANTE : Envoie ces valeurs à votre SettingsService.
-    // Votre SettingsService (que nous avons revu précédemment) sera responsable
-    // de stocker ces valeurs (par exemple, dans un BehaviorSubject et/ou localStorage).
-    this.settingsService.updateSettings(currentFormValues);
-
-    // 3. (Optionnel) Affiche un message dans la console pour vérifier que la sauvegarde fonctionne.
-    console.log('Paramètres de jeu sauvegardés dans SettingsService:', currentFormValues);
-
-    // 4. (Optionnel) Si vous avez encore un @Output() settingsChanged et que d'autres composants
-    // s'y abonnent et en dépendent, vous pouvez l'émettre ici.
-    // Cependant, si le SettingsService est votre source de vérité centrale,
-    // cet EventEmitter peut devenir moins nécessaire.
-    // this.settingsChanged.emit(currentFormValues);
-
-  } else {
-    // Si le formulaire n'est pas valide, affiche un avertissement.
-    console.warn('Le formulaire des paramètres est invalide, la sauvegarde a été bloquée.');
-    // Vous pouvez aussi afficher un message à l'utilisateur ici, par exemple :
-    // alert('Veuillez corriger les erreurs dans les paramètres avant de sauvegarder.');
-  }
-}
 }

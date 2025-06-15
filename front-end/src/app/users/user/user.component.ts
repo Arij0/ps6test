@@ -12,7 +12,6 @@ export class UserComponent {
   @Output() deleteUser = new EventEmitter<User>();
 
   constructor(private router: Router) {}
-  
   // Method called by template (click)="startGame()"
   startGame(): void {
   this.router.navigate(['/themes'], { queryParams: { userId: this.user.id } });

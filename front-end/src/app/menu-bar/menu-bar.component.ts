@@ -11,7 +11,7 @@ export class MenuBarComponent {
     { name: ' Gestion des Enfants', link: '/users' },
     { name: 'Jeux', link: '/themes' }, 
     { name: 'Paramètres des Jeux', link: '/settings' },
-    //{ name: 'Connexion', link: '/admin-login' }
+    { name: 'Connexion', link: '/admin-login' }
   ];
   
   logoPath = 'assets/images/logo.png';

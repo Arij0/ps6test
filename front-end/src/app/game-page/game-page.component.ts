@@ -3,10 +3,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { QuestionService } from '../services/question.service';
 import { ScoreService } from '../services/score.service';
 import { GameSettingsService } from '../services/game-settings.service';
-import { SettingsService,AppSettings } from '../services/settings.service';
-import { Subscription,combineLatest } from 'rxjs';
+import { SettingsService } from '../services/settings.service';
+import { Subscription } from 'rxjs';
 import { Question } from 'src/models/questions.model';
-import { take } from 'rxjs/operators';
 
 @Component({
   selector: 'app-game-page',
@@ -33,7 +32,7 @@ export class GamePageComponent implements OnInit, OnDestroy {
   incorrectAnswerMode = false;
 
   // Game settings
-  gameSettings!: AppSettings
+  gameSettings: any = {};
   secondChanceEnabled = true;
   removeWrongOption = true;
   showEncouragementOnSecondTry = true;
@@ -55,7 +54,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
   // UI feedback
   feedbackMessage = '';
   feedbackExiting = false;
-  showFeedback: boolean = false;
 
   // Theme system
   themeId: string | null = null;
@@ -97,49 +95,16 @@ export class GamePageComponent implements OnInit, OnDestroy {
     private router: Router,
     private questionService: QuestionService,
     private scoreService: ScoreService,
-    private settingsService: SettingsService,
-    private gameSettingsService: GameSettingsService
+    private settingsService?: SettingsService,
+    private gameSettingsService?: GameSettingsService
   ) {
     this.initializeServices();
   }
 
- ngOnInit(): void {
-  // Option 1 (Recommandée pour une meilleure synchronisation) :
-  // Utilisez combineLatest pour attendre à la fois les paramètres de la route et les paramètres du jeu
-  this.subscriptions.add(
-    combineLatest([
-      this.route.params, // Observable qui émet les paramètres de la route (y compris quizId)
-      this.settingsService.settings$ // Observable qui émet les paramètres du jeu
-    ]).subscribe(([params, settings]) => {
-      // Les deux observables ont émis au moins une valeur
-      this.quizId = +params['quizId']; // Récupère l'ID du quiz de la route
-      this.themeId = params['themeId']; // Récupère l'ID du thème
-      this.gameSettings = settings;     // Récupère les paramètres du jeu
-
-      // Appliquez les réglages locaux du composant
-      this.isTimerEnabled = settings.timerEnabled;
-      this.timerDuration = settings.timerDuration;
-      // Mettez à jour d'autres propriétés du GamePageComponent si elles dépendent de gameSettings
-      this.secondChanceEnabled = settings.secondChanceEnabled;
-      this.maxAttempts = settings.maxAttempts; // Assurez-vous que votre settings.maxAttempts existe
-      this.removeWrongOption = settings.removeWrongOption;
-      this.showEncouragementOnSecondTry = settings.showEncouragementOnSecondTry;
-      this.hideWrongAnswers = settings.hideWrongAnswers;
-
-      // Appliquez les styles et démarrez le timer
-      this.setThemeStyle();
-      this.applySettings(); // Cette méthode s'occupe du timer
-
-      // MAINTENANT, et seulement maintenant, nous chargeons les questions
-      // car nous avons toutes les informations nécessaires (quizId et gameSettings)
-      this.loadQuestions();
-    })
-  );
-
-  // Supprimez les appels directs à `subscribeToRouteParams()` et `subscribeToSettings()` d'ici
-  // La logique combinée dans le `combineLatest` les remplace.
-  // Vous pouvez supprimer les méthodes subscribeToRouteParams() et subscribeToSettings() après les avoir refactorisées ici.
-}
+  ngOnInit(): void {
+    this.subscribeToRouteParams();
+    this.subscribeToSettings();
+  }
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
@@ -193,57 +158,31 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   private loadQuestions(): void {
   if (!this.quizId) {
-    console.error('Erreur: ID du quiz manquant pour charger les questions.');
+    console.error('Quiz ID manquant');
     return;
   }
-  if (!this.gameSettings) {
-    console.error('Erreur: Paramètres de jeu non chargés. Attendez que settingsService émette.');
-    return; // Ne pas charger si les paramètres ne sont pas encore là
-  }
 
-  // 1. Extraire la difficulté
-  const difficulty = this.gameSettings.difficulty || 'medium';
+  console.log('[GamePageComponent] Chargement questions avec settings:', this.gameSettings);
 
-  // 2. Extraire les paramètres de longueur de mot
-  let wordLength: number | undefined = undefined;
-  let minWordLength: number | undefined = undefined;
-  let maxWordLength: number | undefined = undefined;
-
-  if (this.gameSettings.wordLength) { // Si le filtrage par longueur de mot est activé
-    if (this.gameSettings.wordLengthRange === 'specific' && this.gameSettings.selectedWordLength) {
-      wordLength = this.gameSettings.selectedWordLength;
-    } else if (this.gameSettings.wordLengthRange === 'range') {
-      minWordLength = this.gameSettings.customMinWordLength || undefined;
-      maxWordLength = this.gameSettings.customMaxWordLength || undefined;
-    }
-  }
-
-  // 3. Appel au QuestionService avec les filtres
+  // CORRECTION: Utiliser retrieveQuestionsWithSettings au lieu de retrieveQuestions
   this.subscriptions.add(
-    // Adaptez cet appel pour correspondre à la signature de votre questionService.retrieveQuestions
-    // QUE NOUS AVONS MODIFIÉE DANS LE MESSAGE PRÉCÉDENT !
-    this.questionService.retrieveQuestions(this.quizId, difficulty, wordLength, minWordLength, maxWordLength).pipe(
-      take(1) // Prend la première émission et se désabonne
-    ).subscribe({
+    this.questionService.retrieveQuestionsWithSettings(this.quizId, this.gameSettings).subscribe({
       next: (questions) => {
+        console.log('[GamePageComponent] Questions reçues:', questions.length);
         this.questions = questions;
         if (this.questions.length > 0) {
           this.initializeFirstQuestion();
         } else {
-          console.warn('Aucune question trouvée pour ce quiz avec les filtres spécifiés.');
-          this.feedbackMessage = 'Aucune question trouvée avec ces paramètres de jeu.';
-          this.showFeedback = true; // Assurez-vous que showFeedback est géré dans votre template
+          console.warn('[GamePageComponent] Aucune question trouvée après filtrage');
+          // Optionnel: afficher un message à l'utilisateur
         }
       },
       error: (error) => {
-        console.error('Erreur lors du chargement des questions:', error);
-        this.feedbackMessage = 'Erreur lors du chargement des questions. Veuillez réessayer.';
-        this.showFeedback = true;
+        console.error('[GamePageComponent] Erreur lors du chargement des questions:', error);
       }
     })
   );
 }
-
   private initializeFirstQuestion(): void {
     this.currentQuestion = this.questions[this.currentQuestionIndex];
     this.displayOptions = [...this.currentQuestion.options];
@@ -252,19 +191,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
 
   // Timer methods
   private applySettings(): void {
-  // Mettre à jour les propriétés du composant basées sur gameSettings
-  if (this.gameSettings) { // Vérifiez que gameSettings est disponible
-    this.isTimerEnabled = this.gameSettings.timerEnabled;
-    this.timerDuration = this.gameSettings.timerDuration;
-    this.hintsToshow = this.gameSettings.hintsPerExercise; // Utilisez hintsPerExercise du SettingsService
-    this.hideWrongAnswers = this.gameSettings.hideWrongAnswers; // Utilisez hideWrongAnswers du SettingsService
-
-    this.secondChanceEnabled = this.gameSettings.secondChanceEnabled;
-    this.maxAttempts = this.gameSettings.maxAttempts;
-    this.removeWrongOption = this.gameSettings.removeWrongOption;
-    this.showEncouragementOnSecondTry = this.gameSettings.showEncouragementOnSecondTry;
-
-    // Redémarrez le timer si nécessaire
     this.stopTimer();
     if (this.isTimerEnabled && this.timerDuration > 0) {
       this.startTimer();
@@ -273,7 +199,6 @@ export class GamePageComponent implements OnInit, OnDestroy {
       this.timeLeft = 0;
     }
   }
-}
 
   private stopTimer(): void {
     if (this.timerInterval) {
@@ -364,27 +289,15 @@ export class GamePageComponent implements OnInit, OnDestroy {
     this.showFeedbackAndProceed(() => this.nextQuestion());
   }
 
- private handleIncorrectAnswer(wrongOption: string): void {
-  // ... votre logique existante ...
-
-  // Si on est en seconde chance
+  private handleIncorrectAnswer(wrongOption: string): void {
   if (this.canGiveSecondChance()) {
-    // Vérifiez si l'option d'indice supplémentaire après erreur est activée
-    if (this.gameSettings.allowExtraHintAfterError && this.currentQuestion.hints &&
-        this.hintsUsed < this.gameSettings.hintsPerExercise) { // Utilisez gameSettings.hintsPerExercise
-      this.canShowHintAfterError = true; // Active le flag pour montrer la suggestion d'indice
-      // Ici, vous pourriez déclencher showHintSuggestion() directement ou après un délai
-      if (this.gameSettings.showHintSuggestionAfterError) {
-        setTimeout(() => this.showHintSuggestion(), this.gameSettings.hintSuggestionDelay * 1000);
-      }
+    // Permettre un indice supplémentaire si configuré dans les paramètres
+    if (this.gameSettings.autoHintOnSecondTry && 
+        this.currentQuestion.hints && 
+        this.hintsUsed < this.hintsToshow) {
+      this.canShowHintAfterError = true;
     }
-
-    // Si autoHintOnSecondTry est activé, affichez l'indice automatiquement
-    if (this.gameSettings.autoHintOnSecondTry && this.currentQuestion.hints &&
-        this.hintsUsed < this.gameSettings.hintsPerExercise) {
-      this.showAutomaticHint(); // Appelle votre méthode pour afficher l'indice auto
-    }
-
+    
     this.handleSecondChance(wrongOption);
   } else {
     this.handleFinalWrongAnswer();
@@ -404,9 +317,10 @@ export class GamePageComponent implements OnInit, OnDestroy {
       this.displayOptions = this.displayOptions.filter(opt => opt !== wrongOption);
     }
     this.showFeedbackAndProceed(() => {
-    
-  });
-  
+      if (this.showEncouragementOnSecondTry) {
+        this.showSecondChanceEncouragement();
+      }
+    });
   }
 
   private handleFinalWrongAnswer(): void {
@@ -560,7 +474,35 @@ export class GamePageComponent implements OnInit, OnDestroy {
     return messages[Math.floor(Math.random() * messages.length)];
   }
 
-
+ private showSecondChanceEncouragement(): void {
+  const encouragementDiv = document.createElement('div');
+  encouragementDiv.className = 'second-chance-encouragement';
+  encouragementDiv.innerHTML = '🌟 Deuxième chance ! Tu peux le faire ! 🌟';
+  encouragementDiv.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 20px;
+    font-weight: bold;
+    z-index: 1000;
+    animation: fadeInOut 3s ease-in-out;
+  `;
+  
+  document.body.appendChild(encouragementDiv);
+  
+  setTimeout(() => {
+    if (encouragementDiv.parentNode) {
+      encouragementDiv.parentNode.removeChild(encouragementDiv);
+    }
+  }, 3000);
+  
+  // Afficher la suggestion d'indice après l'encouragement
+  this.showDelayedHintSuggestion();
+}
 
   // Configuration methods
   configureSecondChance(settings: any): void {

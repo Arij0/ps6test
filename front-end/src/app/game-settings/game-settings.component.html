@@ -440,8 +440,8 @@
 
     <!-- Boutons d'action -->
     <div class="action-buttons">
-      <button type="button" class="reset-button" (click)="resetSettings()">Réinitialiser</button>
-      <button type="submit" class="save-button">Enregistrer</button>
-    </div>
-  </form>
+    <button type="button" class="reset-button" (click)="resetSettings()">Réinitialiser</button>
+    <button type="submit" class="save-button" [disabled]="settingsForm.invalid">Enregistrer</button>
+  </div>
+</form>
 </div>
